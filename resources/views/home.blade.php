@@ -12,7 +12,7 @@
         <ul>
             <li><a href="{{ url('/') }}" class="active">BERANDA</a></li>
             <li><a href="{{ url('/profil') }}">PROFIL</a></li>
-            <li><a href="#sejarah">SEJARAH</a></li>
+            <li><a href="{{ url('/sejarah') }}">SEJARAH</a></li>
             <li><a href="{{ url('/event&news') }}">EVENT & NEWS</a></li>
             <li><a href="#maps">MAPS</a></li>
             <li><a href="{{ url('/destinasi') }}">DESTINASI</a></li>
@@ -22,21 +22,21 @@
 
     <!-- Hero Section -->
     <section class="hero" id="beranda">
-        <img src="{{ asset('images/gereja-kayutangan-malam.jpg') }}" alt="Kayutangan Heritage" class="hero-bg">
+        <img src="{{ asset('images/banner.png') }}" alt="Kayutangan Heritage" class="hero-bg">
         <div class="hero-overlay">
-            <h1 class="hero-title">Kayutangan</h1>
-            <h2 class="hero-subtitle">Heritage</h2>
         </div>
     </section>
 
     <!-- Sejarah & Activities Grid Section -->
     <section class="sejarah-activities-section" id="sejarah">
         <div class="grid-container">
-            <!-- Sejarah - Top Left -->
-            <div class="sejarah-card">
-                <div class="sejarah-label">S E J A R A H</div>
-                <img src="{{ asset('images/gereja-kayutangan-siang.jpg') }}" alt="Sejarah Kayutangan">
-            </div>
+            <!-- Sejarah - Top Left - CLICKABLE -->
+            <a href="{{ url('/sejarah') }}" class="sejarah-card-link">
+                <div class="sejarah-card">
+                    <div class="sejarah-label">S E J A R A H</div>
+                    <img src="{{ asset('images/gereja-kayutangan-siang.jpg') }}" alt="Sejarah Kayutangan">
+                </div>
+            </a>
 
             <!-- Profil - Top Right - CLICKABLE -->
             <a href="{{ url('/profil') }}" class="profil-card-link" id="profil">
@@ -122,7 +122,7 @@
                 <ul>
                     <li><a href="{{ url('/') }}">Beranda</a></li>
                     <li><a href="{{ url('/profil') }}">Profil</a></li>
-                    <li><a href="{{ url('/destinasi') }}">Destinasi Wisata</a></li>
+                    <li><a href="{{ url('/event-news') }}">Destinasi Wisata</a></li>
                     <li><a href="#galeri">Galeri</a></li>
                     <li><a href="#feedback">Feedback</a></li>
                 </ul>

@@ -10,6 +10,10 @@ Route::get('/profil', function () {
     return view('profil');
 });
 
+Route::get('/sejarah', function () {
+    return view('sejarah');
+});
+
 Route::get('/event&news', function () {
     return view('event&news');
 });

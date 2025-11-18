@@ -8,7 +8,8 @@
 </head>
 <body>
     <!-- Navigation -->
-    <nav>
+    <na
+    v>
         <ul>
             <li><a href="{{ url('/') }}">BERANDA</a></li>
             <li><a href="{{ url('/profil') }}">PROFIL</a></li>
@@ -18,7 +19,7 @@
             <li><a href="{{ url('/destinasi') }}">DESTINASI</a></li>
             <li><a href="{{ url('/') }}#galeri">GALERI</a></li>
         </ul>
-    </nav>
+    </na>
 
     <!-- Sejarah Kayutangan Section -->
     <section class="sejarah-section">

@@ -8,8 +8,7 @@
 </head>
 <body>
     <!-- Navigation -->
-    <na
-    v>
+    <nav>
         <ul>
             <li><a href="{{ url('/') }}">BERANDA</a></li>
             <li><a href="{{ url('/profil') }}">PROFIL</a></li>
@@ -19,7 +18,7 @@
             <li><a href="{{ url('/destinasi') }}">DESTINASI</a></li>
             <li><a href="{{ url('/') }}#galeri">GALERI</a></li>
         </ul>
-    </na>
+    </nav>
 
     <!-- Sejarah Kayutangan Section -->
     <section class="sejarah-section">
@@ -142,52 +141,60 @@
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <!-- Logo -->
+            <!-- Logo - CLICKABLE -->
             <div class="footer-logo">
-                <a href="{{ url('/profil') }}" class="footer-logo-circle">
-                    <img src="{{ asset('images/logo-kayutangan.png') }}" alt="Logo Kayutangan Heritage">
-                </a>
-                <div class="footer-menu-mobile">
-                    <h4>Menu</h4>
-                    <ul>
-                        <li><a href="{{ url('/') }}">Home</a></li>
-                        <li><a href="{{ url('/destinasi') }}">Destinasi Wisata</a></li>
-                        <li><a href="{{ url('/') }}#galeri">Galeri</a></li>
-                        <li><a href="#feedback">Feedback</a></li>
-                    </ul>
+                <div class="footer-logo-circle">
+                    <img src="{{ asset('images/kayutangan.jpg') }}" alt="Logo Kayutangan Heritage">
                 </div>
             </div>
             
+            <!-- Menu -->
+            <div class="footer-menu">
+                <h4>Menu</h4>
+                <ul>
+                    <li><a href="{{ url('/') }}">Beranda</a></li>
+                    <li><a href="{{ url('/profil') }}">Profil</a></li>
+                    <li><a href="{{ url('/event-news') }}">Destinasi Wisata</a></li>
+                    <li><a href="#galeri">Galeri</a></li>
+                    <li><a href="#feedback">Feedback</a></li>
+                </ul>
+            </div>
+
             <!-- Kontak & Social Media & Alamat -->
-            <div class="footer-right">
-                <div class="footer-row">
-                    <!-- Kontak -->
-                    <div class="footer-contact">
-                        <h4>Kontak</h4>
-                        <p>📞 +62 xxx xxxx xxxx<br>✉️ info@kayutangan.com</p>
+            <div>
+                <!-- Kontak -->
+                <div class="footer-contact">
+                    <h4>Kontak</h4>
+                    <div class="contact-item">
+                        <span class="contact-icon">📱</span>
+                        <span>+62 xxx xxxx xxxx</span>
                     </div>
-                    
-                    <!-- Social Media -->
-                    <div class="social-section">
-                        <h4>Social Media</h4>
-                        <div class="social-icons">
-                            <a href="#" class="social-icon">📷</a>
-                            <a href="#" class="social-icon">f</a>
-                            <a href="#" class="social-icon">𝕏</a>
-                        </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">✉️</span>
+                        <span>info@kayutangan.com</span>
+                    </div>
+                </div>
+                
+                <!-- Social Media -->
+                <div class="social-section">
+                    <h4>Social Media</h4>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon" title="Instagram">📷</a>
+                        <a href="#" class="social-icon" title="Facebook">f</a>
+                        <a href="#" class="social-icon" title="Twitter">𝕏</a>
                     </div>
                 </div>
 
                 <!-- Alamat -->
                 <div class="address-section">
                     <h4>📍 Alamat</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+                    <p>Jl. Basuki Rahmat No.10, Kayutangan, Kec. Klojen, Kota Malang, Jawa Timur 65112</p>
                 </div>
             </div>
         </div>
         
         <div class="footer-bottom">
-            <p>Copyright</p>
+            <p>© 2025 Kayutangan Heritage</p>
         </div>
     </footer>
 </body>

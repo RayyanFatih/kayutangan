@@ -29,3 +29,7 @@ Route::get('event', function () {
 Route::get('/destinasi', function () {
     return view('destinasi');
 });
+
+Route::get('/galeri', function () {
+    return view('galeri');
+});

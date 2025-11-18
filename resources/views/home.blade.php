@@ -16,7 +16,7 @@
             <li><a href="{{ url('/event&news') }}">EVENT & NEWS</a></li>
             <li><a href="#maps">MAPS</a></li>
             <li><a href="{{ url('/destinasi') }}">DESTINASI</a></li>
-            <li><a href="#galeri">GALERI</a></li>
+            <li><a href="{{ url('/galeri') }}">GALERI</a></li>
         </ul>
     </nav>
 
@@ -55,10 +55,12 @@
             </a>
 
             <!-- Galeri - Bottom Right -->
-            <div class="galeri-card" id="galeri">
-                <img src="{{ asset('images/lepen.jpg') }}" alt="Galeri Pengunjung">
-                <div class="galeri-label">G A L E R I</div>
-            </div>
+             <a href="{{ url('/galeri') }}">
+                <div class="galeri-card" id="galeri">
+                    <img src="{{ asset('images/lepen.jpg') }}" alt="Galeri Pengunjung">
+                    <div class="galeri-label">G A L E R I</div>
+                </div>
+            </a>
         </div>
     </section>
 

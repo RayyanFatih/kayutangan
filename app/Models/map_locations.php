@@ -41,3 +41,4 @@ class map_locations extends Model
         return $this->belongsTo(maps::class);
     }
 }
+

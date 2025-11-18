@@ -18,3 +18,4 @@ class maps extends Model
         return $this->hasMany(map_locations::class);
     }
 }
+

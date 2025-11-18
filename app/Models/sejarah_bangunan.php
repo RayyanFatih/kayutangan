@@ -34,3 +34,4 @@ class sejarah_bangunan extends Model
     }
 }
 
+

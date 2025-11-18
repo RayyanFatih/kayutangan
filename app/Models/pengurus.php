@@ -17,3 +17,4 @@ class pengurus extends Model
         'linkedin',
     ];
 }
+

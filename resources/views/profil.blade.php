@@ -10,13 +10,13 @@
     <!-- Navigation -->
     <nav>
         <ul>
-            <li><a href="{{ url('/') }}">BERANDA</a></li>
-            <li><a href="{{ url('/profil') }}" class="active">PROFIL</a></li>
-            <li><a href="{{ url('/') }}#sejarah">SEJARAH</a></li>
-            <li><a href="{{ url('/') }}#event">EVENT & NEWS</a></li>
-            <li><a href="{{ url('/') }}#maps">MAPS</a></li>
-            <li><a href="{{ url('/') }}#destinasi">DESTINASI</a></li>
-            <li><a href="{{ url('/') }}#galeri">GALERI</a></li>
+            <li><a href="{{ url('/') }}" class="active">BERANDA</a></li>
+            <li><a href="{{ url('/profil') }}">PROFIL</a></li>
+            <li><a href="{{ url('/sejarah') }}">SEJARAH</a></li>
+            <li><a href="{{ url('/event&news') }}">EVENT & NEWS</a></li>
+            <li><a href="#maps">MAPS</a></li>
+            <li><a href="{{ url('/destinasi') }}">DESTINASI</a></li>
+            <li><a href="{{ url('/galeri') }}">GALERI</a></li>
         </ul>
     </nav>
 
@@ -28,7 +28,7 @@
 
     <!-- Hero Image -->
     <div class="hero-profil">
-        <img src="{{ asset('images/hero-profil.jpg') }}" alt="Kayutangan Heritage">
+        <img src="{{ asset('images/bundaran.png') }}" alt="Kayutangan Heritage">
     </div>
 
     <!-- Content -->

@@ -10,13 +10,13 @@
     <!-- Navigation -->
     <nav>
         <ul>
-            <li><a href="{{ url('/') }}">BERANDA</a></li>
+            <li><a href="{{ url('/') }}" class="active">BERANDA</a></li>
             <li><a href="{{ url('/profil') }}">PROFIL</a></li>
-            <li><a href="{{ url('/sejarah') }}" class="active">SEJARAH</a></li>
+            <li><a href="{{ url('/sejarah') }}">SEJARAH</a></li>
             <li><a href="{{ url('/event&news') }}">EVENT & NEWS</a></li>
-            <li><a href="{{ url('/') }}#maps">MAPS</a></li>
+            <li><a href="#maps">MAPS</a></li>
             <li><a href="{{ url('/destinasi') }}">DESTINASI</a></li>
-            <li><a href="{{ url('/') }}#galeri">GALERI</a></li>
+            <li><a href="{{ url('/galeri') }}">GALERI</a></li>
         </ul>
     </nav>
 
@@ -37,7 +37,7 @@
                 <div class="content-with-image">
                     <div class="content-image left">
                         {{-- GANTI: {{ asset('storage/' . $sejarah->image_1) }} --}}
-                        <img src="{{ asset('images/sejarah-kolonial.jpg') }}" alt="Masa Kolonial">
+                        <img src="{{ asset('images/kayutangan-dulu.png') }}" alt="Masa Kolonial">
                     </div>
                     <div class="content-text right">
                         <h2>Masa Kolonial: Pusat Aktivitas Kota</h2>
@@ -94,10 +94,10 @@
                     {{-- <a href="{{ route('building.show', $building->id) }}"> --}}
                     <div class="building-image">
                         {{-- GANTI: {{ asset('storage/' . $building->image) }} --}}
-                        <img src="{{ asset('images/building-1.jpg') }}" alt="Bangunan">
+                        <img src="{{ asset('images/bni.png') }}" alt="Bangunan">
                         <div class="building-overlay">
                             {{-- GANTI: {{ $building->name }} --}}
-                            <h3>Hotel Tugu Malang</h3>
+                            <h3>BNI Emerald</h3>
                         </div>
                     </div>
                     {{-- </a> --}}
@@ -106,9 +106,9 @@
                 <!-- Building Card 2 -->
                 <div class="building-card">
                     <div class="building-image">
-                        <img src="{{ asset('images/building-2.jpg') }}" alt="Bangunan">
+                        <img src="{{ asset('images/tugu-jam.png') }}" alt="Bangunan">
                         <div class="building-overlay">
-                            <h3>Toko Oen</h3>
+                            <h3>Tugu Jam</h3>
                         </div>
                     </div>
                 </div>
@@ -116,7 +116,7 @@
                 <!-- Building Card 3 -->
                 <div class="building-card">
                     <div class="building-image">
-                        <img src="{{ asset('images/building-3.jpg') }}" alt="Bangunan">
+                        <img src="{{ asset('images/rumah.png') }}" alt="Bangunan">
                         <div class="building-overlay">
                             <h3>Rumah</h3>
                         </div>
@@ -126,9 +126,9 @@
                 <!-- Building Card 4 -->
                 <div class="building-card">
                     <div class="building-image">
-                        <img src="{{ asset('images/building-4.jpg') }}" alt="Bangunan">
+                        <img src="{{ asset('images/terowongan.png') }}" alt="Bangunan">
                         <div class="building-overlay">
-                            <h3>Terowongan Semeroe</h3>
+                            <h3>Terowongan Semeru - Bromo</h3>
                         </div>
                     </div>
                 </div>

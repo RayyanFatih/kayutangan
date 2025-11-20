@@ -14,6 +14,10 @@ Route::get('/sejarah', function () {
     return view('sejarah');
 });
 
+Route::get('/maps', function () {
+    return view('maps');
+});
+
 Route::get('/event&news', function () {
     return view('event&news');
 });
@@ -32,4 +36,10 @@ Route::get('/destinasi', function () {
 
 Route::get('/galeri', function () {
     return view('galeri');
+});
+
+// Admin Routes
+Route::prefix('admin')->group(function () {
+    Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'beranda'])->name('admin.dashboard');
+    Route::get('/beranda', [\App\Http\Controllers\Admin\DashboardController::class, 'beranda'])->name('admin.beranda');
 });

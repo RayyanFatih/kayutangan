@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class pengurus extends Model
+class Pengurus extends Model
 {
     protected $fillable = [
         'nama',
         'jabatan',
+        'foto',
         'nomor',
         'email',
-        'foto',
         'instagram',
         'facebook',
         'linkedin',

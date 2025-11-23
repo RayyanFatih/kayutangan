@@ -24,10 +24,15 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#profil">
+                    <a href="#" class="menu-toggle" onclick="toggleSubmenu(event, -1)">
                         <span class="icon">👤</span>
-                        <span>PROFIL KAJOETANGAN</span>
+                        <span>PROFIL</span>
+                        <span class="toggle-icon">▼</span>
                     </a>
+                    <ul class="submenu">
+                        <li><a href="{{ route('admin.profil.edit') }}">EDIT PROFIL</a></li>
+                        <li><a href="{{ route('admin.pengurus.index') }}">PENGURUS</a></li>
+                    </ul>
                 </li>
                 <li>
                     <a href="#" class="menu-toggle" onclick="toggleSubmenu(event, 0)">
@@ -49,7 +54,7 @@
                 <li>
                     <a href="#" class="menu-toggle" onclick="toggleSubmenu(event, 1)">
                         <span class="icon">🏖️</span>
-                        <span>DESTINASI WISATA</span>
+                        <span>DESTINASI</span>
                         <span class="toggle-icon">▼</span>
                     </a>
                     <ul class="submenu">
@@ -72,13 +77,13 @@
                 <li>
                     <a href="#galeri">
                         <span class="icon">🖼️</span>
-                        <span>GALERI PENGUNJUNG</span>
+                        <span>GALERI</span>
                     </a>
                 </li>
                 <li>
                     <a href="#feedback">
                         <span class="icon">💬</span>
-                        <span>FEEDBACK PENGUNJUNG</span>
+                        <span>FEEDBACK</span>
                     </a>
                 </li>
             </ul>

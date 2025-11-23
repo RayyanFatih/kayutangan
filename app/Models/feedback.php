@@ -13,7 +13,6 @@ class Feedback extends Model
         'nomor',
         'email',
         'kategori',
-        'tipe',
         'pesan',
         'status',
         'checked_by',

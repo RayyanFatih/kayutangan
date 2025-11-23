@@ -124,9 +124,9 @@
                 <ul>
                     <li><a href="{{ url('/') }}">Beranda</a></li>
                     <li><a href="{{ url('/profil') }}">Profil</a></li>
-                    <li><a href="{{ url('/event-news') }}">Destinasi Wisata</a></li>
+                    <li><a href="{{ url('/event&news') }}">Destinasi Wisata</a></li>
                     <li><a href="#galeri">Galeri</a></li>
-                    <li><a href="#feedback">Feedback</a></li>
+                    <li><a href="{{ url('/feedback') }}">Feedback</a></li>
                 </ul>
             </div>
 

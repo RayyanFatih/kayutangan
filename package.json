@@ -15,6 +15,6 @@
         "vite": "^7.0.7"
     },
     "dependencies": {
-        "tailwind": "^4.0.0"
+        "tailwind": "^2.3.1"
     }
 }

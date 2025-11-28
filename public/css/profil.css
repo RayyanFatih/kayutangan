@@ -8,6 +8,8 @@ body {
     font-family: 'Georgia', serif;
     color: #333;
     background-color: #f8f6f3;
+    perspective: none !important;
+    -webkit-perspective: none !important;
 }
 
 /* Navigation */
@@ -86,6 +88,9 @@ nav a.active {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px 80px;
+    perspective: none !important;
+    -webkit-perspective: none !important;
+    transform: none !important;
 }
 
 /* Content Block (Full Width Text) */
@@ -115,6 +120,18 @@ nav a.active {
     gap: 40px;
     margin-bottom: 50px;
     align-items: center;
+    perspective: none !important;
+    transform-style: flat !important;
+    -webkit-perspective: none !important;
+    transform: none !important;
+}
+
+.column-image {
+    perspective: none;
+    transform-style: flat;
+    -webkit-perspective: none;
+    transform: none !important;
+    -webkit-transform: none !important;
 }
 
 .column-text h3 {
@@ -137,6 +154,14 @@ nav a.active {
     height: auto;
     border-radius: 5px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    transform: none !important;
+    display: block;
+    -webkit-transform: none !important;
+    -moz-transform: none !important;
+    -ms-transform: none !important;
+    -o-transform: none !important;
+    perspective: none !important;
+    -webkit-perspective: none !important;
 }
 
 /* Pengurus Section */
@@ -192,6 +217,13 @@ nav a.active {
     font-size: 18px;
     letter-spacing: 4px;
     font-weight: bold;
+}
+
+.pengurus-nama {
+    color: #6b5d4f;
+    font-size: 14px;
+    margin-top: 10px;
+    font-style: italic;
 }
 
 /* Footer */
@@ -383,4 +415,19 @@ footer {
     .column-text p {
         font-size: 14px;
     }
+}
+
+/* Reset all 3D effects */
+html, body, * {
+    perspective: none !important;
+    -webkit-perspective: none !important;
+    transform-style: initial !important;
+}
+
+/* Force image to be completely flat and straight */
+.column-image img,
+.hero-profil img {
+    transform: perspective(0) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewX(0deg) skewY(0deg) !important;
+    -webkit-transform: perspective(0) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewX(0deg) skewY(0deg) !important;
+    -moz-transform: perspective(0) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewX(0deg) skewY(0deg) !important;
 }

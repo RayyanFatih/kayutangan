@@ -41,8 +41,8 @@
                         <span class="toggle-icon">▼</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="#sejarah-kayutangan">SEJARAH KAYUTANGAN</a></li>
-                        <li><a href="#sejarah-bangunan">SEJARAH BANGUNAN</a></li>
+                        <li><a href="{{ route('sejarah.edit-view') }}" class="active">SEJARAH KAYUTANGAN</a></li>
+                        <li><a href="{{ route('admin.sejarah-bangunan.index') }}">SEJARAH BANGUNAN</a></li>
                     </ul>
                 </li>
                 <li>
@@ -70,8 +70,8 @@
                         <span class="toggle-icon">▼</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="#event">EVENT</a></li>
-                        <li><a href="#news">NEWS</a></li>
+                        <li><a href="{{ route('admin.event.index') }}">EVENT</a></li>
+                        <li><a href="{{ route('admin.news.index') }}">NEWS</a></li>
                     </ul>
                 </li>
                 <li>

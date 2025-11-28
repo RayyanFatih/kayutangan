@@ -28,21 +28,23 @@ class ProfilController extends Controller
         // Validasi input
         $validated = $request->validate([
             'intro_text' => 'nullable|string',
+            'aktivitas_kreatif_title' => 'nullable|string|max:255',
             'aktivitas_kreatif_text' => 'nullable|string',
+            'pejalan_kaki_title' => 'nullable|string|max:255',
             'pejalan_kaki_text' => 'nullable|string',
+            'umkm_title' => 'nullable|string|max:255',
             'umkm_text' => 'nullable|string',
+            'wisata_title' => 'nullable|string|max:255',
             'wisata_text' => 'nullable|string',
+            'wajah_baru_title' => 'nullable|string|max:255',
             'wajah_baru_text' => 'nullable|string',
-            'banner_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'profil_image_1' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'profil_image_2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'profil_image_3' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'aktivitas_kreatif_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'pejalan_kaki_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'umkm_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'ketua_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'wakil_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'bendahara_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'banner_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+            'profil_image_1' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+            'profil_image_2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+            'profil_image_3' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+            'aktivitas_kreatif_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+            'pejalan_kaki_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+            'umkm_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
         ]);
 
         // Handle image uploads
@@ -54,9 +56,6 @@ class ProfilController extends Controller
             'aktivitas_kreatif_image',
             'pejalan_kaki_image',
             'umkm_image',
-            'ketua_image',
-            'wakil_image',
-            'bendahara_image'
         ];
 
         foreach ($imageFields as $field) {

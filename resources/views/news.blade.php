@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {{-- GANTI: {{ $news->title }} --}}
-    <title>Tari Malangan - Kayutangan Heritage</title>
+    <title>{{ $singleNews->judul ?? 'Berita' }} - Kayutangan Heritage</title>
     <link rel="stylesheet" href="{{ asset('css/acara&berita.css') }}">">
 </head>
 <body>
@@ -27,16 +26,13 @@
             <!-- Main Content -->
             <div class="main-content">
                 <!-- Title -->
-                {{-- GANTI: {{ $news->title }} --}}
-                <h1 class="detail-title">Tari Malangan</h1>
+                <h1 class="detail-title">{{ $singleNews->judul ?? 'Berita' }}</h1>
                 
                 <!-- Meta Info -->
                 <div class="meta-info">
-                    {{-- GANTI: {{ $news->author }} --}}
-                    <span class="author">Penulis</span>
+                    <span class="author">Admin</span>
                     <span class="separator">—</span>
-                    {{-- GANTI: {{ $news->created_at->format('d F Y') }} --}}
-                    <span class="date">Tanggal post ini dibuat</span>
+                    <span class="date">{{ $singleNews?->created_at?->format('d F Y') ?? 'Tanggal tidak tersedia' }}</span>
                 </div>
 
                 <!-- Share Buttons -->
@@ -64,27 +60,19 @@
                 <!-- Featured Image -->
                 <div class="featured-image">
                     {{-- GANTI: {{ asset('storage/' . $news->image) }} --}}
-                    <img src="{{ asset('images/event-1.jpg') }}" alt="Tari Malangan">
+                <!-- Featured Image -->
+                <div class="featured-image">
+                    @if($singleNews->gambar)
+                        <img src="{{ asset('storage/' . $singleNews->gambar) }}" alt="{{ $singleNews->judul }}">
+                    @else
+                        <img src="{{ asset('images/placeholder.png') }}" alt="{{ $singleNews->judul }}">
+                    @endif
                 </div>
 
                 <!-- Content Body -->
                 <div class="content-body">
-                    {{-- GANTI: {!! $news->content !!} --}}
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
-
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
-
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
-
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
-
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
-
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
-                </div>
-
-                <!-- Author Section -->
-                <div class="author-section">
+                    {!! nl2br(e($singleNews->konten ?? $singleNews->ringkasan ?? 'Konten tidak tersedia')) !!}
+                </div>lass="author-section">
                     <h4>Nama Penulis</h4>
                     {{-- GANTI: {{ $news->author }} atau data penulis dari database --}}
                 </div>
@@ -98,52 +86,30 @@
                     {{-- @foreach($otherNews as $item) --}}
                     
                     <!-- Sidebar Item 1 -->
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <h3 class="sidebar-title">Berita Lainnya</h3>
+                <div class="sidebar-list">
+                    {{-- LOOP BERITA LAINNYA --}}
+                    @forelse($otherNews as $item)
                     <div class="sidebar-item">
                         <div class="sidebar-image">
-                            {{-- GANTI: {{ asset('storage/' . $item->image) }} --}}
-                            <img src="{{ asset('images/news-1.jpg') }}" alt="Berita">
+                            @if($item->gambar)
+                                <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->judul }}">
+                            @else
+                                <img src="{{ asset('images/placeholder.png') }}" alt="{{ $item->judul }}">
+                            @endif
                         </div>
                         <div class="sidebar-content">
-                            {{-- GANTI: {{ $item->title }} --}}
-                            <h4>Judul Berita<br>Judul Berita</h4>
-                            {{-- GANTI: {{ $item->created_at->format('d F Y') }} --}}
-                            <p class="sidebar-date">Tanggal berita dibuat</p>
+                            <h4><a href="{{ route('news.detail', ['id' => $item->id]) }}" style="text-decoration: none; color: inherit;">{{ Str::limit($item->judul, 50) }}</a></h4>
+                            <p class="sidebar-date">{{ $item->created_at->format('d F Y') }}</p>
                         </div>
                     </div>
-
-                    <!-- Sidebar Item 2 -->
-                    <div class="sidebar-item">
-                        <div class="sidebar-image">
-                            <img src="{{ asset('images/news-2.jpg') }}" alt="Berita">
-                        </div>
-                        <div class="sidebar-content">
-                            <h4>Judul Berita<br>Judul Berita</h4>
-                            <p class="sidebar-date">Tanggal berita dibuat</p>
-                        </div>
-                    </div>
-
-                    <!-- Sidebar Item 3 -->
-                    <div class="sidebar-item">
-                        <div class="sidebar-image">
-                            <img src="{{ asset('images/news-3.jpg') }}" alt="Berita">
-                        </div>
-                        <div class="sidebar-content">
-                            <h4>Judul Berita<br>Judul Berita</h4>
-                            <p class="sidebar-date">Tanggal berita dibuat</p>
-                        </div>
-                    </div>
-
-                    {{-- @endforeach --}}
+                    @empty
+                    <p style="text-align: center; color: #999;">Tidak ada berita lainnya</p>
+                    @endforelse
                 </div>
-            </aside>
-        </div>
-    </section>
-
-    <footer>
-        <div class="footer-content">
-            <!-- Logo - CLICKABLE -->
-            <div class="footer-logo">
-                <div class="footer-logo-circle">
+            </aside> class="footer-logo-circle">
                     <img src="{{ asset('images/kayutangan.jpg') }}" alt="Logo Kayutangan Heritage">
                 </div>
             </div>

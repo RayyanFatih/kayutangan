@@ -36,7 +36,7 @@ class PengurusController extends Controller
         $validated = $request->validate([
             'nama' => 'required|string|max:255',
             'jabatan' => 'required|string|max:255',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
             'nomor' => 'nullable|string',
             'email' => 'nullable|email',
             'instagram' => 'nullable|string',
@@ -67,7 +67,7 @@ class PengurusController extends Controller
         $validated = $request->validate([
             'nama' => 'required|string|max:255',
             'jabatan' => 'required|string|max:255',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
             'nomor' => 'nullable|string',
             'email' => 'nullable|email',
             'instagram' => 'nullable|string',

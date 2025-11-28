@@ -29,63 +29,24 @@
 
         <div class="news-grid">
             {{-- LOOP UNTUK NEWS DARI DATABASE --}}
-            {{-- @foreach($news as $item) --}}
-            
-            <!-- News Card 1 - CONTOH STATIC -->
+            @forelse($news as $item)
             <div class="news-card">
                 <div class="news-image">
-                    {{-- GANTI: {{ asset('storage/' . $item->image) }} --}}
-                    <img src="{{ asset('images/news-1.jpg') }}" alt="News 1">
+                    @if($item->gambar)
+                        <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->judul }}">
+                    @else
+                        <img src="{{ asset('images/placeholder.png') }}" alt="{{ $item->judul }}">
+                    @endif
                 </div>
                 <div class="news-content">
-                    {{-- GANTI: {{ $item->title }} --}}
-                    <h3>Judul</h3>
-                    
-                    {{-- GANTI: {{ Str::limit($item->description, 200) }} --}}
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
-                    
-                    {{-- GANTI: route('news.show', $item->id) --}}
-                    <a href="{{ url('/news') }}" class="btn-detail">Lihat Selengkapnya</a>
+                    <h3>{{ $item->judul }}</h3>
+                    <p>{{ Str::limit($item->ringkasan, 200) }}</p>
+                    <a href="{{ route('news.detail', ['id' => $item->id]) }}" class="btn-detail">Lihat Selengkapnya</a>
                 </div>
             </div>
-
-            <!-- News Card 2 - CONTOH STATIC -->
-            <div class="news-card">
-                <div class="news-image">
-                    <img src="{{ asset('images/news-2.jpg') }}" alt="News 2">
-                </div>
-                <div class="news-content">
-                    <h3>Judul</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
-                    <a href="#" class="btn-detail">Lihat Selengkapnya</a>
-                </div>
-            </div>
-
-            <!-- News Card 3 - CONTOH STATIC -->
-            <div class="news-card">
-                <div class="news-image">
-                    <img src="{{ asset('images/news-3.jpg') }}" alt="News 3">
-                </div>
-                <div class="news-content">
-                    <h3>Judul</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
-                    <a href="#" class="btn-detail">Lihat Selengkapnya</a>
-                </div>
-            </div>
-
-            <!-- News Card 4 - CONTOH STATIC -->
-            <div class="news-card">
-                <div class="news-image">
-                    <img src="{{ asset('images/news-4.jpg') }}" alt="News 4">
-                </div>
-                <div class="news-content">
-                    <h3>Judul</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
-                    <a href="#" class="btn-detail">Lihat Selengkapnya</a>
-                </div>
-            </div>
-            
-            {{-- @endforeach --}}
+            @empty
+            <p style="grid-column: 1 / -1; text-align: center; color: #999; padding: 40px;">Belum ada data berita</p>
+            @endforelse
         </div>
     </section>
 
@@ -98,63 +59,24 @@
 
         <div class="event-grid">
             {{-- LOOP UNTUK EVENT DARI DATABASE --}}
-            {{-- @foreach($events as $item) --}}
-            
-            <!-- Event Card 1 - CONTOH STATIC -->
+            @forelse($events as $item)
             <div class="event-card">
                 <div class="event-image">
-                    {{-- GANTI: {{ asset('storage/' . $item->image) }} --}}
-                    <img src="{{ asset('images/event-1.jpg') }}" alt="Event 1">
+                    @if($item->gambar)
+                        <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->judul }}">
+                    @else
+                        <img src="{{ asset('images/placeholder.png') }}" alt="{{ $item->judul }}">
+                    @endif
                 </div>
                 <div class="event-content">
-                    {{-- GANTI: {{ $item->title }} --}}
-                    <h3>Judul</h3>
-                    
-                    {{-- GANTI: {{ Str::limit($item->description, 200) }} --}}
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
-                    
-                    {{-- GANTI: route('event.show', $item->id) --}}
-                    <a href="{{ url('/event') }}" class="btn-detail">Lihat Selengkapnya</a>
+                    <h3>{{ $item->judul }}</h3>
+                    <p>{{ Str::limit($item->ringkasan, 200) }}</p>
+                    <a href="{{ route('event.detail', ['id' => $item->id]) }}" class="btn-detail">Lihat Selengkapnya</a>
                 </div>
             </div>
-
-            <!-- Event Card 2 - CONTOH STATIC -->
-            <div class="event-card">
-                <div class="event-image">
-                    <img src="{{ asset('images/event-2.jpg') }}" alt="Event 2">
-                </div>
-                <div class="event-content">
-                    <h3>Judul</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
-                    <a href="#" class="btn-detail">Lihat Selengkapnya</a>
-                </div>
-            </div>
-
-            <!-- Event Card 3 - CONTOH STATIC -->
-            <div class="event-card">
-                <div class="event-image">
-                    <img src="{{ asset('images/event-3.jpg') }}" alt="Event 3">
-                </div>
-                <div class="event-content">
-                    <h3>Judul</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
-                    <a href="#" class="btn-detail">Lihat Selengkapnya</a>
-                </div>
-            </div>
-
-            <!-- Event Card 4 - CONTOH STATIC -->
-            <div class="event-card">
-                <div class="event-image">
-                    <img src="{{ asset('images/event-4.jpg') }}" alt="Event 4">
-                </div>
-                <div class="event-content">
-                    <h3>Judul</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
-                    <a href="#" class="btn-detail">Lihat Selengkapnya</a>
-                </div>
-            </div>
-            
-            {{-- @endforeach --}}
+            @empty
+            <p style="grid-column: 1 / -1; text-align: center; color: #999; padding: 40px;">Belum ada data event</p>
+            @endforelse
         </div>
     </section>
 

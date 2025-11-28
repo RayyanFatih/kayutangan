@@ -28,118 +28,81 @@
 
     <!-- Hero Image -->
     <div class="hero-profil">
-        <img src="{{ asset('images/bundaran.png') }}" alt="Kayutangan Heritage">
+        @if ($profil->banner_image)
+            <img src="{{ asset('storage/' . $profil->banner_image) }}" alt="Kayutangan Heritage">
+        @else
+            <img src="{{ asset('images/bundaran.png') }}" alt="Kayutangan Heritage">
+        @endif
     </div>
 
     <!-- Content -->
     <div class="profil-content">
         <!-- Welcome Text -->
         <div class="content-block">
-            <p>
-                Selamat datang di Kayutangan Heritage, kawasan ikonik di pusat Kota Malang yang memadukan 
-                pesona sejarah dengan kehidupan modern. Kawasan ini terkenal dengan landmark bersejarah, 
-                gedung yang megah, serta suasana yang mengajak warga, pelaku usaha, dan wisatawan untuk bersantai 
-                dalam suasana yang elok dan mempesona.
-            </p>
-            <p>
-                Sebagai kawasan heritage yang terus dikembangkan, Kayutangan menawarkan ragam seni kota yang ramah 
-                bagi turis. Jelajahi setiap sudutnya dan temukan keunikan arsitektur kolonial, kafe-kafe modern, 
-                serta berbagai aktivitas budaya yang menghidupkan kawasan ini. Dari pagi hingga malam, Kayutangan 
-                tetap menjadi destinasi favorit untuk berkumpul, berkreasi, dan menikmati keindahan kota.
-            </p>
+            @if ($profil->intro_text)
+                {!! nl2br(e($profil->intro_text)) !!}
+            @endif
         </div>
 
         <!-- Section 1: Pusat Aktivitas -->
         <div class="content-two-column">
             <div class="column-text">
-                <h3>Pusat Aktivitas Kreatif dan Sosial</h3>
-                <p>
-                    Kayutangan kini menjadi salah satu pusat aktivitas kreatif dan inovasi di Kota Malang. 
-                    Kafe-kafe yang berada di sini memiliki konsep yang unik dan ramah bagi pengunjung, 
-                    menciptakan ruang interaksi yang hangat antara satu sama lain. Berbagai UMKM lokal turut 
-                    hadir dan menghadirkan harmoni antara gaya hidup modern dengan nilai filosofi yang dinamis.
-                </p>
-                <p>
-                    Seniman, musisi, dan para pelaku kreatif datang untuk menikmati suasana inspiratif, 
-                    menjadikan Kayutangan sebagai tempat pengembangan kreativitas dan hubungan sosial. 
-                    Di sini, keramahan masyarakat lokal berpadu dengan inovasi, menciptakan ekosistem 
-                    yang mendukung pertumbuhan ekonomi kreatif berbasis komunitas.
-                </p>
+                <h3>{{ $profil->aktivitas_kreatif_title ?? 'Pusat Aktivitas Kreatif dan Sosial' }}</h3>
+                @if ($profil->aktivitas_kreatif_text)
+                    {!! nl2br(e($profil->aktivitas_kreatif_text)) !!}
+                @endif
             </div>
             <div class="column-image">
-                <img src="{{ asset('images/aktivitas-kreatif.jpg') }}" alt="Aktivitas Kreatif">
+                @if ($profil->aktivitas_kreatif_image)
+                    <img src="{{ asset('storage/' . $profil->aktivitas_kreatif_image) }}" alt="Aktivitas Kreatif">
+                @endif
             </div>
         </div>
 
         <!-- Section 2: Destinasi Ramah Pejalan Kaki -->
         <div class="content-two-column">
             <div class="column-image">
-                <img src="{{ asset('images/pejalan-kaki.jpg') }}" alt="Pejalan Kaki">
+                @if ($profil->pejalan_kaki_image)
+                    <img src="{{ asset('storage/' . $profil->pejalan_kaki_image) }}" alt="Pejalan Kaki">
+                @endif
             </div>
             <div class="column-text">
-                <h3>Destinasi Ramah Pejalan Kaki</h3>
-                <p>
-                    Salah satu ciri khas utama Kayutangan adalah konsep kawasan ramah pejalan kaki. 
-                    Jalanan yang dulunya padat kendaraan kini disulap menjadi area pejalan kaki yang nyaman 
-                    untuk dinikmati. Pengunjung dapat dengan leluasa menjelajahi setiap sudut kota sambil 
-                    menikmati pemandangan bangunan bersejarah dan instalasi seni yang menghiasi kawasan.
-                </p>
-                <p>
-                    Hal ini menjadikan Kayutangan sebagai tempat ideal untuk menghabiskan waktu bersama 
-                    keluarga atau teman. Berjalan santai, berkuliner, atau sekadar menikmati area yang 
-                    penuh warna ini memberikan sensasi berbeda. Konsep pedestrian-friendly membuat 
-                    pengunjung merasa aman dan nyaman menjelajahi berbagai pojok menarik di Kayutangan.
-                </p>
+                <h3>{{ $profil->pejalan_kaki_title ?? 'Destinasi Ramah Pejalan Kaki' }}</h3>
+                @if ($profil->pejalan_kaki_text)
+                    {!! nl2br(e($profil->pejalan_kaki_text)) !!}
+                @endif
             </div>
         </div>
 
         <!-- Section 3: Dukungan UMKM -->
         <div class="content-two-column">
             <div class="column-text">
-                <h3>Dukungan bagi UMKM dan Komunitas Lokal</h3>
-                <p>
-                    Kawasan Kayutangan juga menjadi rumah bagi UMKM lokal dan komunitas lokal yang 
-                    terus berkembang. Dengan konsep kawasan berbasis ekonomi kreatif, banyak pelaku 
-                    usaha diberi kesempatan untuk membuka usaha dan menjalankan aktivitas bisnis mereka 
-                    dengan dukungan penuh dari pemerintah dan masyarakat.
-                </p>
-                <p>
-                    Dari kuliner tradisional hingga produk kerajinan tangan, UMKM di Kayutangan 
-                    menawarkan beragam pilihan yang menarik bagi pengunjung. Kehadiran mereka tidak 
-                    hanya memperkaya pengalaman wisata, tetapi juga membantu meningkatkan ekonomi 
-                    lokal dan mempertahankan identitas budaya Kota Malang.
-                </p>
+                <h3>{{ $profil->umkm_title ?? 'Dukungan bagi UMKM dan Komunitas Lokal' }}</h3>
+                @if ($profil->umkm_text)
+                    {!! nl2br(e($profil->umkm_text)) !!}
+                @endif
             </div>
             <div class="column-image">
-                <img src="{{ asset('images/umkm-lokal.jpg') }}" alt="UMKM Lokal">
+                @if ($profil->umkm_image)
+                    <img src="{{ asset('storage/' . $profil->umkm_image) }}" alt="UMKM Lokal">
+                @endif
             </div>
         </div>
 
         <!-- Section 4: Tempat untuk Berwisata -->
         <div class="content-block">
-            <h3>Tempat untuk Berwisata, Edukasi, dan Rekreasi</h3>
-            <p>
-                Dengan visual yang unik dan memukau, Kayutangan Heritage juga merupakan salah satu 
-                destinasi wisata populer di Kota Malang. Keindahan arsitektur bangunan kolonial yang 
-                masih terawat, kombinasi warna cat gedung yang khas, serta instalasi seni di berbagai 
-                sudut menciptakan spot foto yang instagramable. Setiap sudut Kayutangan menyuguhkan 
-                keindahan visual yang berbeda, mengundang pengunjung untuk mengabadikan momen 
-                berharga mereka di sini.
-            </p>
+            <h3>{{ $profil->wisata_title ?? 'Tempat untuk Berwisata, Edukasi, dan Rekreasi' }}</h3>
+            @if ($profil->wisata_text)
+                {!! nl2br(e($profil->wisata_text)) !!}
+            @endif
         </div>
 
         <!-- Section 5: Wajah Baru Kota Malang -->
         <div class="content-block">
-            <h3>Kayutangan: Wajah Baru Kota Malang</h3>
-            <p>
-                Kayutangan Heritage adalah wajah baru Kota Malang yang berhasil memadukan nilai 
-                sejarah dengan kehidupan modern yang tetap menghargai warisan budaya. Berkat 
-                pengembangan yang terus dilakukan oleh pemerintah lokal, kawasan ini kini menjadi 
-                pusat dinamika kota bagi generasi muda untuk berkumpul, berkarya, dan berinovasi. 
-                Kami mengundang Anda untuk datang berkunjung, menikmati keindahan Kayutangan, 
-                mendukung pelaku UMKM lokal, dan menjadi bagian dari perjalanan revitalisasi 
-                kawasan heritage yang terus tumbuh dan berkembang.
-            </p>
+            <h3>{{ $profil->wajah_baru_title ?? 'Kayutangan: Wajah Baru Kota Malang' }}</h3>
+            @if ($profil->wajah_baru_text)
+                {!! nl2br(e($profil->wajah_baru_text)) !!}
+            @endif
         </div>
     </div>
 
@@ -149,21 +112,30 @@
             <h2>PENGURUS</h2>
         </div>
         <div class="pengurus-grid">
-            <!-- Ketua -->
-            <div class="pengurus-card">
-                <img src="{{ asset('images/ketua.png') }}" alt="Ketua">
-                <h4>KETUA</h4>
-            </div>
-            <!-- Wakil -->
-            <div class="pengurus-card">
-                <img src="{{ asset('images/wakil.png') }}" alt="Wakil">
-                <h4>WAKIL</h4>
-            </div>
-            <!-- Bendahara -->
-            <div class="pengurus-card">
-                <img src="{{ asset('images/bendahara.png') }}" alt="Bendahara">
-                <h4>BENDAHARA</h4>
-            </div>
+            @forelse ($pengurus as $member)
+                <div class="pengurus-card">
+                    @if ($member->foto)
+                        <img src="{{ asset('storage/' . $member->foto) }}" alt="{{ $member->nama }}">
+                    @else
+                        <img src="{{ asset('images/placeholder.png') }}" alt="{{ $member->nama }}">
+                    @endif
+                    <h4>{{ $member->jabatan ?? 'PENGURUS' }}</h4>
+                    <p class="pengurus-nama">{{ $member->nama }}</p>
+                </div>
+            @empty
+                <div class="pengurus-card">
+                    <img src="{{ asset('images/ketua.png') }}" alt="Ketua">
+                    <h4>KETUA</h4>
+                </div>
+                <div class="pengurus-card">
+                    <img src="{{ asset('images/wakil.png') }}" alt="Wakil">
+                    <h4>WAKIL</h4>
+                </div>
+                <div class="pengurus-card">
+                    <img src="{{ asset('images/bendahara.png') }}" alt="Bendahara">
+                    <h4>BENDAHARA</h4>
+                </div>
+            @endforelse
         </div>
     </div>
 

@@ -1,8 +1,8 @@
 @extends('layouts.admin')
-<link rel="stylesheet" href="{{ asset('css-admin/pengurus.css') }}">
+<link rel="stylesheet" href="{{ asset('css-admin/edit-bangunan.css') }}">
 
 @section('content')
-<div class="pengurus-page-wrapper">
+<div class="sejarah-bangunan-page-wrapper">
     <!-- Sidebar -->
     <aside class="sidebar">
         <div class="sidebar-logo">
@@ -18,14 +18,14 @@
                 </a>
             </li>
             <li>
-                <a href="#" class="menu-toggle" onclick="toggleSubmenu(event, -1)" class="active">
+                <a href="#" class="menu-toggle" onclick="toggleSubmenu(event, -1)">
                     <span class="icon">👤</span>
                     <span>PROFIL</span>
                     <span class="toggle-icon">▼</span>
                 </a>
-                <ul class="submenu active">
+                <ul class="submenu">
                     <li><a href="{{ route('admin.profil.edit') }}">EDIT PROFIL</a></li>
-                    <li><a href="{{ route('admin.pengurus.index') }}" class="active">PENGURUS</a></li>
+                    <li><a href="{{ route('admin.pengurus.index') }}">PENGURUS</a></li>
                 </ul>
             </li>
             <li>
@@ -35,8 +35,8 @@
                     <span class="toggle-icon">▼</span>
                 </a>
                 <ul class="submenu">
-                    <li><a href="#sejarah-kayutangan">SEJARAH KAYUTANGAN</a></li>
-                    <li><a href="#sejarah-bangunan">SEJARAH BANGUNAN</a></li>
+                    <li><a href="{{ route('sejarah.edit-view') }}">SEJARAH KAYUTANGAN</a></li>
+                    <li><a href="{{ route('admin.sejarah-bangunan.index') }}">SEJARAH BANGUNAN</a></li>
                 </ul>
             </li>
             <li>
@@ -64,8 +64,8 @@
                     <span class="toggle-icon">▼</span>
                 </a>
                 <ul class="submenu">
-                    <li><a href="#event">EVENT</a></li>
-                    <li><a href="#news">NEWS</a></li>
+                    <li><a href="{{ route('admin.event.index') }}">EVENT</a></li>
+                    <li><a href="{{ route('admin.news.index') }}" class="active">NEWS</a></li>
                 </ul>
             </li>
             <li>
@@ -89,9 +89,9 @@
         </div>
     </aside>
 
-    <div class="pengurus-container">
+    <div class="sejarah-bangunan-container">
         <div class="page-header">
-            <h1>PENGURUS</h1>
+            <h1>KELOLA BERITA</h1>
         </div>
 
         @if ($errors->any())
@@ -112,120 +112,116 @@
             </div>
         @endif
 
-        <!-- Grid Pengurus -->
-        <div class="pengurus-grid">
-            @forelse ($pengurus as $item)
-                <div class="pengurus-card">
-                    <div class="pengurus-image-wrapper">
-                        @if ($item->foto)
-                            <img src="{{ asset('storage/' . $item->foto) }}" alt="{{ $item->nama }}">
+        <!-- Grid Berita -->
+        <div class="bangunan-grid">
+            @forelse ($news as $item)
+                <div class="building-card">
+                    <div class="building-image">
+                        @if ($item->gambar)
+                            <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->judul }}">
                         @else
-                            <div class="pengurus-placeholder">📷</div>
+                            <img src="{{ asset('images/placeholder.png') }}" alt="{{ $item->judul }}">
                         @endif
                     </div>
-
-                    <div class="pengurus-info">
-                        <p class="pengurus-name">{{ $item->nama }}</p>
-                        <p class="pengurus-position">{{ $item->jabatan }}</p>
-                    </div>
-
-                    <div class="pengurus-actions">
-                        <button type="button" class="btn-edit" data-id="{{ $item->id }}" onclick="editPengurus(this.dataset.id)">UBAH</button>
-                        <form action="{{ route('admin.pengurus.destroy', $item->id) }}" method="POST" style="display: inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus pengurus ini?')">🗑️</button>
-                        </form>
+                    <div class="building-content">
+                        <h3 class="building-title">{{ $item->judul }}</h3>
+                        <p class="building-description">{{ Str::limit($item->ringkasan, 100) }}</p>
+                        <div class="button-group">
+                            <button type="button" class="btn-edit" data-id="{{ $item->id }}" onclick="editNews(this.dataset.id)">UBAH</button>
+                            <button type="button" class="btn-delete" data-id="{{ $item->id }}" onclick="deleteNews(this.dataset.id)" title="Hapus">🗑️</button>
+                        </div>
                     </div>
                 </div>
             @empty
-                <p style="grid-column: 1 / -1; text-align: center; color: #999; padding: 40px;">Belum ada data pengurus</p>
+                <p style="grid-column: 1 / -1; text-align: center; color: #999; padding: 40px;">Belum ada data berita</p>
             @endforelse
         </div>
 
-        <!-- Tombol Tambah Pengurus -->
-        <div class="add-pengurus-section">
-            <button type="button" class="btn-tambah" onclick="addPengurus()">TAMBAH PENGURUS</button>
+        <!-- Tombol Tambah Berita -->
+        <div class="add-bangunan-section">
+            <button type="button" class="btn-tambah" onclick="addNews()">TAMBAH BERITA</button>
         </div>
     </div>
 </div>
 
-<!-- Modal Edit Pengurus -->
+<!-- Modal Edit Berita -->
 <div id="editModal" class="modal">
     <div class="modal-content">
         <span class="modal-close" onclick="closeModal()">&times;</span>
-        <h2>Edit Pengurus</h2>
+        <h2>Edit Berita</h2>
 
         <form id="editForm" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
             <div class="form-group">
-                <label>Foto Pengurus</label>
-                <div class="file-input-wrapper">
-                    <div id="photoPreview" class="image-preview-box" style="display: none;">
-                        <img id="previewImg" src="" alt="Preview">
-                        <button type="button" class="btn-remove-img" onclick="removePhoto()">✕ Hapus Foto</button>
-                    </div>
-                    <input type="file" id="photoInput" name="foto" accept="image/*" class="file-input">
-                    <label for="photoInput" class="file-input-label">Choose image...</label>
+                <label>Judul Berita</label>
+                <input type="text" id="editJudul" name="judul" required>
+            </div>
+
+            <div class="form-group">
+                <label>Gambar</label>
+                <input type="file" id="photoInput" name="gambar" accept="image/*">
+                <div id="photoPreview" style="display:none; margin-top: 10px;">
+                    <img id="photoImg" src="" alt="Preview" style="max-width: 200px;">
+                    <button type="button" onclick="removePhoto()" class="btn-remove-img">Hapus</button>
                 </div>
-                <small>Format: JPG, PNG, GIF. Ukuran maksimal: 10MB</small>
             </div>
 
             <div class="form-group">
-                <label for="nama">Nama Pengurus</label>
-                <input type="text" id="nama" name="nama" required placeholder="Masukkan nama pengurus...">
+                <label>Ringkasan</label>
+                <textarea id="editRingkasan" name="ringkasan" rows="4"></textarea>
             </div>
 
             <div class="form-group">
-                <label for="posisi">Jabatan</label>
-                <input type="text" id="posisi" name="jabatan" required placeholder="Masukkan jabatan pengurus...">
+                <label>Konten</label>
+                <textarea id="editKonten" name="konten" rows="8"></textarea>
             </div>
 
             <div class="form-actions">
-                <button type="submit" class="btn-submit">SIMPAN</button>
-                <button type="button" class="btn-cancel" onclick="closeModal()">BATAL</button>
+                <button type="submit" class="btn btn-primary">UPDATE</button>
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">BATAL</button>
             </div>
         </form>
     </div>
 </div>
 
-<!-- Modal Tambah Pengurus -->
+<!-- Modal Tambah Berita -->
 <div id="addModal" class="modal">
     <div class="modal-content">
         <span class="modal-close" onclick="closeAddModal()">&times;</span>
-        <h2>Tambah Pengurus</h2>
+        <h2>Tambah Berita</h2>
 
-        <form id="addForm" method="POST" action="{{ route('admin.pengurus.store') }}" enctype="multipart/form-data">
+        <form id="addForm" method="POST" action="{{ route('admin.news.store') }}" enctype="multipart/form-data">
             @csrf
 
             <div class="form-group">
-                <label>Foto Pengurus</label>
-                <div class="file-input-wrapper">
-                    <div id="addPhotoPreview" class="image-preview-box" style="display: none;">
-                        <img id="addPreviewImg" src="" alt="Preview">
-                        <button type="button" class="btn-remove-img" onclick="removeAddPhoto()">✕ Hapus Foto</button>
-                    </div>
-                    <input type="file" id="addPhotoInput" name="foto" accept="image/*" class="file-input">
-                    <label for="addPhotoInput" class="file-input-label">Choose image...</label>
+                <label>Judul Berita</label>
+                <input type="text" name="judul" required>
+            </div>
+
+            <div class="form-group">
+                <label>Gambar</label>
+                <input type="file" id="addPhotoInput" name="gambar" accept="image/*">
+                <div id="addPhotoPreview" style="display:none; margin-top: 10px;">
+                    <img id="addPhotoImg" src="" alt="Preview" style="max-width: 200px;">
+                    <button type="button" onclick="removeAddPhoto()" class="btn-remove-img">Hapus</button>
                 </div>
-                <small>Format: JPG, PNG, GIF. Ukuran maksimal: 10MB</small>
             </div>
 
             <div class="form-group">
-                <label for="addNama">Nama Pengurus</label>
-                <input type="text" id="addNama" name="nama" required placeholder="Masukkan nama pengurus...">
+                <label>Ringkasan</label>
+                <textarea name="ringkasan" rows="4"></textarea>
             </div>
 
             <div class="form-group">
-                <label for="addPosisi">Jabatan</label>
-                <input type="text" id="addPosisi" name="jabatan" required placeholder="Masukkan jabatan pengurus...">
+                <label>Konten</label>
+                <textarea name="konten" rows="8"></textarea>
             </div>
 
             <div class="form-actions">
-                <button type="submit" class="btn-submit">SIMPAN</button>
-                <button type="button" class="btn-cancel" onclick="closeAddModal()">BATAL</button>
+                <button type="submit" class="btn btn-primary">TAMBAH</button>
+                <button type="button" class="btn btn-secondary" onclick="closeAddModal()">BATAL</button>
             </div>
         </form>
     </div>
@@ -244,33 +240,28 @@
         }
     }
 
-    function editPengurus(id) {
-        // Get pengurus data via AJAX
-        fetch(`/admin/pengurus/${id}`)
+    function editNews(id) {
+        fetch(`/admin/news/${id}`)
             .then(response => response.json())
             .then(data => {
-                document.getElementById('nama').value = data.nama;
-                document.getElementById('posisi').value = data.jabatan;
-
-                if (data.foto) {
-                    document.getElementById('previewImg').src = `/storage/${data.foto}`;
+                document.getElementById('editJudul').value = data.judul;
+                document.getElementById('editRingkasan').value = data.ringkasan || '';
+                document.getElementById('editKonten').value = data.konten || '';
+                
+                if (data.gambar) {
+                    document.getElementById('photoImg').src = `/storage/${data.gambar}`;
                     document.getElementById('photoPreview').style.display = 'block';
-                } else {
-                    document.getElementById('photoPreview').style.display = 'none';
                 }
 
-                document.getElementById('editForm').action = `/admin/pengurus/${id}`;
+                document.getElementById('editForm').action = `/admin/news/${id}`;
                 document.getElementById('editModal').style.display = 'block';
             })
             .catch(error => console.error('Error:', error));
     }
 
-    function addPengurus() {
-        // Clear form
+    function addNews() {
         document.getElementById('addForm').reset();
         document.getElementById('addPhotoPreview').style.display = 'none';
-
-        // Show modal
         document.getElementById('addModal').style.display = 'block';
     }
 
@@ -292,18 +283,30 @@
         document.getElementById('addPhotoPreview').style.display = 'none';
     }
 
+    function deleteNews(id) {
+        if (confirm('Apakah Anda yakin ingin menghapus berita ini?')) {
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = `/admin/news/${id}`;
+            form.innerHTML = `@csrf @method('DELETE')`;
+            document.body.appendChild(form);
+            form.submit();
+        }
+    }
+
     // Photo preview handlers
     document.addEventListener('DOMContentLoaded', function() {
         const photoInput = document.getElementById('photoInput');
         if (photoInput) {
             photoInput.addEventListener('change', function(e) {
-                if (e.target.files && e.target.files[0]) {
+                const file = e.target.files[0];
+                if (file) {
                     const reader = new FileReader();
                     reader.onload = function(event) {
-                        document.getElementById('previewImg').src = event.target.result;
+                        document.getElementById('photoImg').src = event.target.result;
                         document.getElementById('photoPreview').style.display = 'block';
                     };
-                    reader.readAsDataURL(e.target.files[0]);
+                    reader.readAsDataURL(file);
                 }
             });
         }
@@ -311,13 +314,14 @@
         const addPhotoInput = document.getElementById('addPhotoInput');
         if (addPhotoInput) {
             addPhotoInput.addEventListener('change', function(e) {
-                if (e.target.files && e.target.files[0]) {
+                const file = e.target.files[0];
+                if (file) {
                     const reader = new FileReader();
                     reader.onload = function(event) {
-                        document.getElementById('addPreviewImg').src = event.target.result;
+                        document.getElementById('addPhotoImg').src = event.target.result;
                         document.getElementById('addPhotoPreview').style.display = 'block';
                     };
-                    reader.readAsDataURL(e.target.files[0]);
+                    reader.readAsDataURL(file);
                 }
             });
         }

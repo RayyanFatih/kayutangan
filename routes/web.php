@@ -6,29 +6,20 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/profil', function () {
-    return view('profil');
-});
+Route::get('/profil', [\App\Http\Controllers\ProfilViewController::class, 'show'])->name('profil.show');
 
-Route::get('/sejarah', function () {
-    return view('sejarah');
-});
+Route::get('/sejarah', [\App\Http\Controllers\SejarahViewController::class, 'show'])->name('sejarah.show');
+Route::get('/sejarah/edit-view', [\App\Http\Controllers\SejarahViewController::class, 'editView'])->name('sejarah.edit-view');
 
 Route::get('/maps', function () {
     return view('maps');
 });
 
-Route::get('/event&news', function () {
-    return view('event&news');
-});
+Route::get('/event&news', [\App\Http\Controllers\EventNewsViewController::class, 'index'])->name('event-news.index');
 
-Route::get('/news', function () {
-    return view('news');
-});
+Route::get('/news', [\App\Http\Controllers\EventNewsViewController::class, 'newsDetail'])->name('news.detail');
 
-Route::get('event', function () {
-    return view('event');
-});
+Route::get('/event', [\App\Http\Controllers\EventNewsViewController::class, 'eventDetail'])->name('event.detail');
 
 Route::get('/destinasi', [App\Http\Controllers\DestinasiController::class, 'index'])->name('user.destinasi.index');
 Route::get('/destinasi/{slug}', [App\Http\Controllers\DestinasiController::class, 'show'])->name('user.destinasi.show');
@@ -44,21 +35,18 @@ Route::post('/feedback', [\App\Http\Controllers\FeedbackController::class, 'stor
 
 // ======================
 // Admin Routes
-// ======================
-
-Route::prefix('admin')->name('admin.')->group(function () {
-
-    // Dashboard
-    Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'beranda'])->name('dashboard');
-    Route::get('/beranda', [\App\Http\Controllers\Admin\DashboardController::class, 'beranda'])->name('beranda');
-
-    // Profil
-    Route::get('/profil/edit', [\App\Http\Controllers\Admin\ProfilController::class, 'edit'])->name('profil.edit');
-    Route::post('/profil/update', [\App\Http\Controllers\Admin\ProfilController::class, 'update'])->name('profil.update');
-
-    // CRUD Destinasi
-     Route::resource('destinasi', \App\Http\Controllers\Admin\DestinasiController::class)
-        ->parameters(['destinasi' => 'destinasi']);
-    // CRUD Pengurus
-    Route::resource('pengurus', \App\Http\Controllers\Admin\PengurusController::class);
+Route::prefix('admin')->group(function () {
+    Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'beranda'])->name('admin.dashboard');
+    Route::get('/beranda', [\App\Http\Controllers\Admin\DashboardController::class, 'beranda'])->name('admin.beranda');
+    
+    // Profil Routes
+    Route::get('/profil/edit', [\App\Http\Controllers\Admin\ProfilController::class, 'edit'])->name('admin.profil.edit');
+    Route::post('/profil/update', [\App\Http\Controllers\Admin\ProfilController::class, 'update'])->name('admin.profil.update');
+    
+    // Pengurus Routes
+    Route::get('/pengurus', [\App\Http\Controllers\Admin\PengurusController::class, 'index'])->name('admin.pengurus.index');
+    Route::get('/pengurus/{id}', [\App\Http\Controllers\Admin\PengurusController::class, 'show'])->name('admin.pengurus.show');
+    Route::post('/pengurus', [\App\Http\Controllers\Admin\PengurusController::class, 'store'])->name('admin.pengurus.store');
+    Route::put('/pengurus/{id}', [\App\Http\Controllers\Admin\PengurusController::class, 'update'])->name('admin.pengurus.update');
+    Route::delete('/pengurus/{id}', [\App\Http\Controllers\Admin\PengurusController::class, 'destroy'])->name('admin.pengurus.destroy');
 });

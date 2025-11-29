@@ -1,8 +1,8 @@
 @extends('layouts.admin')
-<link rel="stylesheet" href="{{ asset('css-admin/pengurus.css') }}">
+<link rel="stylesheet" href="{{ asset('css-admin/edit-bangunan.css') }}">
 
 @section('content')
-<div class="pengurus-page-wrapper">
+<div class="sejarah-bangunan-page-wrapper">
     <!-- Sidebar -->
     <aside class="sidebar">
         <div class="sidebar-logo">
@@ -18,25 +18,25 @@
                 </a>
             </li>
             <li>
-                <a href="#" class="menu-toggle" onclick="toggleSubmenu(event, -1)" class="active">
+                <a href="#" class="menu-toggle" onclick="toggleSubmenu(event, -1)">
                     <span class="icon">👤</span>
                     <span>PROFIL</span>
                     <span class="toggle-icon">▼</span>
                 </a>
-                <ul class="submenu active">
+                <ul class="submenu">
                     <li><a href="{{ route('admin.profil.edit') }}">EDIT PROFIL</a></li>
-                    <li><a href="{{ route('admin.pengurus.index') }}" class="active">PENGURUS</a></li>
+                    <li><a href="{{ route('admin.pengurus.index') }}">PENGURUS</a></li>
                 </ul>
             </li>
             <li>
-                <a href="#" class="menu-toggle" onclick="toggleSubmenu(event, 0)">
+                <a href="#" class="menu-toggle" onclick="toggleSubmenu(event, 0)" class="active">
                     <span class="icon">📖</span>
                     <span>SEJARAH</span>
                     <span class="toggle-icon">▼</span>
                 </a>
-                <ul class="submenu">
+                <ul class="submenu active">
                     <li><a href="#sejarah-kayutangan">SEJARAH KAYUTANGAN</a></li>
-                    <li><a href="#sejarah-bangunan">SEJARAH BANGUNAN</a></li>
+                    <li><a href="{{ route('admin.sejarah-bangunan.index') }}" class="active">SEJARAH BANGUNAN</a></li>
                 </ul>
             </li>
             <li>
@@ -89,9 +89,9 @@
         </div>
     </aside>
 
-    <div class="pengurus-container">
+    <div class="sejarah-bangunan-container">
         <div class="page-header">
-            <h1>PENGURUS</h1>
+            <h1>SEJARAH BANGUNAN</h1>
         </div>
 
         @if ($errors->any())
@@ -112,75 +112,85 @@
             </div>
         @endif
 
-        <!-- Grid Pengurus -->
-        <div class="pengurus-grid">
-            @forelse ($pengurus as $item)
-                <div class="pengurus-card">
-                    <div class="pengurus-image-wrapper">
-                        @if ($item->foto)
-                            <img src="{{ asset('storage/' . $item->foto) }}" alt="{{ $item->nama }}">
+        <!-- Grid Bangunan -->
+        <div class="bangunan-grid">
+            @forelse ($buildings as $item)
+                <div class="bangunan-card">
+                    <div class="bangunan-image-wrapper">
+                        @if ($item->gambar_bangunan)
+                            <img src="{{ asset('storage/' . $item->gambar_bangunan) }}" alt="{{ $item->nama_bangunan }}">
                         @else
-                            <div class="pengurus-placeholder">📷</div>
+                            <div class="bangunan-placeholder">🏛️</div>
                         @endif
                     </div>
 
-                    <div class="pengurus-info">
-                        <p class="pengurus-name">{{ $item->nama }}</p>
-                        <p class="pengurus-position">{{ $item->jabatan }}</p>
+                    <div class="bangunan-info">
+                        <p class="bangunan-name">{{ $item->nama_bangunan }}</p>
+                        <p class="bangunan-description-preview">{{ Str::limit($item->deskripsi, 80, '...') }}</p>
                     </div>
 
-                    <div class="pengurus-actions">
-                        <button type="button" class="btn-edit" data-id="{{ $item->id }}" onclick="editPengurus(this.dataset.id)">UBAH</button>
-                        <form action="{{ route('admin.pengurus.destroy', $item->id) }}" method="POST" style="display: inline;">
+                    <div class="bangunan-actions">
+                        <button type="button" class="btn-edit" data-id="{{ $item->id }}" onclick="editBangunan(this.dataset.id)">UBAH</button>
+                        <form action="{{ route('admin.sejarah-bangunan.destroy', $item->id) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus pengurus ini?')">🗑️</button>
+                            <button type="submit" class="btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus bangunan ini?')">🗑️</button>
                         </form>
                     </div>
                 </div>
             @empty
-                <p style="grid-column: 1 / -1; text-align: center; color: #999; padding: 40px;">Belum ada data pengurus</p>
+                <p style="grid-column: 1 / -1; text-align: center; color: #999; padding: 40px;">Belum ada data sejarah bangunan</p>
             @endforelse
         </div>
 
-        <!-- Tombol Tambah Pengurus -->
-        <div class="add-pengurus-section">
-            <button type="button" class="btn-tambah" onclick="addPengurus()">TAMBAH PENGURUS</button>
+        <!-- Tombol Tambah Bangunan -->
+        <div class="add-bangunan-section">
+            <button type="button" class="btn-tambah" onclick="addBangunan()">TAMBAH BANGUNAN</button>
         </div>
     </div>
 </div>
 
-<!-- Modal Edit Pengurus -->
+<!-- Modal Edit Bangunan -->
 <div id="editModal" class="modal">
     <div class="modal-content">
         <span class="modal-close" onclick="closeModal()">&times;</span>
-        <h2>Edit Pengurus</h2>
+        <h2>Edit Bangunan</h2>
 
         <form id="editForm" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
             <div class="form-group">
-                <label>Foto Pengurus</label>
+                <label>Gambar Bangunan</label>
                 <div class="file-input-wrapper">
                     <div id="photoPreview" class="image-preview-box" style="display: none;">
                         <img id="previewImg" src="" alt="Preview">
                         <button type="button" class="btn-remove-img" onclick="removePhoto()">✕ Hapus Foto</button>
                     </div>
-                    <input type="file" id="photoInput" name="foto" accept="image/*" class="file-input">
+                    <input type="file" id="photoInput" name="gambar_bangunan" accept="image/*" class="file-input">
                     <label for="photoInput" class="file-input-label">Choose image...</label>
                 </div>
                 <small>Format: JPG, PNG, GIF. Ukuran maksimal: 10MB</small>
             </div>
 
             <div class="form-group">
-                <label for="nama">Nama Pengurus</label>
-                <input type="text" id="nama" name="nama" required placeholder="Masukkan nama pengurus...">
+                <label for="nama">Nama Bangunan</label>
+                <input type="text" id="nama" name="nama_bangunan" required placeholder="Masukkan nama bangunan...">
             </div>
 
             <div class="form-group">
-                <label for="posisi">Jabatan</label>
-                <input type="text" id="posisi" name="jabatan" required placeholder="Masukkan jabatan pengurus...">
+                <label for="deskripsi">Deskripsi</label>
+                <textarea id="deskripsi" name="deskripsi" required placeholder="Masukkan deskripsi bangunan..." rows="5" style="width: 100%; padding: 10px 15px; border: 1px solid #ddd; border-radius: 6px; font-family: inherit; font-size: 14px;"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="tahun">Tahun Dibangun</label>
+                <input type="number" id="tahun" name="tahun_dibangun" placeholder="Masukkan tahun..." min="1800" max="{{ date('Y') }}">
+            </div>
+
+            <div class="form-group">
+                <label for="lokasi">Lokasi</label>
+                <input type="text" id="lokasi" name="lokasi" placeholder="Masukkan lokasi bangunan...">
             </div>
 
             <div class="form-actions">
@@ -191,36 +201,46 @@
     </div>
 </div>
 
-<!-- Modal Tambah Pengurus -->
+<!-- Modal Tambah Bangunan -->
 <div id="addModal" class="modal">
     <div class="modal-content">
         <span class="modal-close" onclick="closeAddModal()">&times;</span>
-        <h2>Tambah Pengurus</h2>
+        <h2>Tambah Bangunan</h2>
 
-        <form id="addForm" method="POST" action="{{ route('admin.pengurus.store') }}" enctype="multipart/form-data">
+        <form id="addForm" method="POST" action="{{ route('admin.sejarah-bangunan.store') }}" enctype="multipart/form-data">
             @csrf
 
             <div class="form-group">
-                <label>Foto Pengurus</label>
+                <label>Gambar Bangunan</label>
                 <div class="file-input-wrapper">
                     <div id="addPhotoPreview" class="image-preview-box" style="display: none;">
                         <img id="addPreviewImg" src="" alt="Preview">
                         <button type="button" class="btn-remove-img" onclick="removeAddPhoto()">✕ Hapus Foto</button>
                     </div>
-                    <input type="file" id="addPhotoInput" name="foto" accept="image/*" class="file-input">
+                    <input type="file" id="addPhotoInput" name="gambar_bangunan" accept="image/*" class="file-input">
                     <label for="addPhotoInput" class="file-input-label">Choose image...</label>
                 </div>
                 <small>Format: JPG, PNG, GIF. Ukuran maksimal: 10MB</small>
             </div>
 
             <div class="form-group">
-                <label for="addNama">Nama Pengurus</label>
-                <input type="text" id="addNama" name="nama" required placeholder="Masukkan nama pengurus...">
+                <label for="addNama">Nama Bangunan</label>
+                <input type="text" id="addNama" name="nama_bangunan" required placeholder="Masukkan nama bangunan...">
             </div>
 
             <div class="form-group">
-                <label for="addPosisi">Jabatan</label>
-                <input type="text" id="addPosisi" name="jabatan" required placeholder="Masukkan jabatan pengurus...">
+                <label for="addDeskripsi">Deskripsi</label>
+                <textarea id="addDeskripsi" name="deskripsi" required placeholder="Masukkan deskripsi bangunan..." rows="5" style="width: 100%; padding: 10px 15px; border: 1px solid #ddd; border-radius: 6px; font-family: inherit; font-size: 14px;"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="addTahun">Tahun Dibangun</label>
+                <input type="number" id="addTahun" name="tahun_dibangun" placeholder="Masukkan tahun..." min="1800" max="{{ date('Y') }}">
+            </div>
+
+            <div class="form-group">
+                <label for="addLokasi">Lokasi</label>
+                <input type="text" id="addLokasi" name="lokasi" placeholder="Masukkan lokasi bangunan...">
             </div>
 
             <div class="form-actions">
@@ -244,28 +264,30 @@
         }
     }
 
-    function editPengurus(id) {
-        // Get pengurus data via AJAX
-        fetch(`/admin/pengurus/${id}`)
+    function editBangunan(id) {
+        // Get bangunan data via AJAX
+        fetch(`/admin/sejarah-bangunan/${id}`)
             .then(response => response.json())
             .then(data => {
-                document.getElementById('nama').value = data.nama;
-                document.getElementById('posisi').value = data.jabatan;
+                document.getElementById('nama').value = data.nama_bangunan;
+                document.getElementById('deskripsi').value = data.deskripsi;
+                document.getElementById('tahun').value = data.tahun_dibangun || '';
+                document.getElementById('lokasi').value = data.lokasi || '';
 
-                if (data.foto) {
-                    document.getElementById('previewImg').src = `/storage/${data.foto}`;
+                if (data.gambar_bangunan) {
+                    document.getElementById('previewImg').src = `/storage/${data.gambar_bangunan}`;
                     document.getElementById('photoPreview').style.display = 'block';
                 } else {
                     document.getElementById('photoPreview').style.display = 'none';
                 }
 
-                document.getElementById('editForm').action = `/admin/pengurus/${id}`;
+                document.getElementById('editForm').action = `/admin/sejarah-bangunan/${id}`;
                 document.getElementById('editModal').style.display = 'block';
             })
             .catch(error => console.error('Error:', error));
     }
 
-    function addPengurus() {
+    function addBangunan() {
         // Clear form
         document.getElementById('addForm').reset();
         document.getElementById('addPhotoPreview').style.display = 'none';

@@ -1,0 +1,590 @@
+ * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f8f6f3;
+    }
+
+    .sejarah-bangunan-page-wrapper {
+        display: flex;
+        min-height: 100vh;
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+        width: 200px;
+        background: linear-gradient(135deg, #8B7355 0%, #6b5344 100%);
+        color: white;
+        position: fixed;
+        height: 100vh;
+        overflow-y: auto;
+        box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sidebar-logo {
+        padding: 20px 15px;
+        text-align: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .sidebar-logo-img {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #d4a574, #c89968);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 24px;
+        color: #4f4638;
+    }
+
+    .sidebar-logo-text {
+        font-size: 12px;
+        font-weight: 600;
+        text-align: left;
+        line-height: 1.3;
+    }
+
+    .sidebar-menu {
+        list-style: none;
+        flex: 1;
+        padding: 20px 0;
+    }
+
+    .sidebar-menu li {
+        position: relative;
+    }
+
+    .sidebar-menu a {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 15px;
+        color: white;
+        text-decoration: none;
+        font-size: 12px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .sidebar-menu a:hover {
+        background: rgba(255, 255, 255, 0.1);
+        padding-left: 20px;
+    }
+
+    .sidebar-menu a.active {
+        background: rgba(212, 165, 116, 0.3);
+        border-left: 3px solid #d4a574;
+        padding-left: 12px;
+    }
+
+    .sidebar-menu .icon {
+        font-size: 16px;
+        min-width: 20px;
+    }
+
+    .toggle-icon {
+        margin-left: auto;
+        font-size: 10px;
+        transition: transform 0.3s ease;
+    }
+
+    .submenu {
+        display: none;
+        list-style: none;
+        background: rgba(0, 0, 0, 0.2);
+        padding: 0;
+    }
+
+    .submenu.active {
+        display: block;
+    }
+
+    .submenu li a {
+        padding-left: 40px;
+        font-size: 11px;
+        background: rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar-bottom {
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 15px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .sidebar-bottom a {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 15px;
+        color: white;
+        text-decoration: none;
+        font-size: 11px;
+        transition: all 0.3s ease;
+    }
+
+    .sidebar-bottom a:hover {
+        background: rgba(255, 255, 255, 0.1);
+        padding-left: 20px;
+    }
+
+    /* Main Content */
+    .sejarah-bangunan-container {
+        margin-left: 200px;
+        flex: 1;
+        padding: 40px 80px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #f8f6f3;
+    }
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 40px;
+        width: 100%;
+    }
+
+    .page-header h1 {
+        color: #4f4638;
+        font-size: 36px;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    .alert {
+        padding: 15px 20px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+        border-left: 4px solid;
+        width: 100%;
+        max-width: 900px;
+    }
+
+    .alert-success {
+        background: #d4edda;
+        color: #155724;
+        border-left-color: #28a745;
+    }
+
+    .alert-error {
+        background: #f8d7da;
+        color: #721c24;
+        border-left-color: #dc3545;
+    }
+
+    .alert ul {
+        list-style: none;
+        margin: 0;
+    }
+
+    .alert-close {
+        background: none;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        color: inherit;
+        float: right;
+    }
+
+    /* Grid Bangunan */
+    .bangunan-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+        width: 100%;
+        max-width: 900px;
+        margin-bottom: 40px;
+    }
+
+    .bangunan-card {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+    }
+
+    .bangunan-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    }
+
+    .building-image {
+        width: 100%;
+        height: 200px;
+        background: #f0f0f0;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .building-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .building-content {
+        padding: 20px;
+        text-align: center;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 60px;
+        position: relative;
+    }
+
+    .building-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #4f4638;
+        margin-bottom: 15px;
+    }
+
+    .building-description {
+        font-size: 13px;
+        color: #666;
+        line-height: 1.5;
+        margin-bottom: 20px;
+        flex: 1;
+    }
+
+    .button-group {
+        position: absolute;
+        bottom: 15px;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        padding: 0 20px;
+    }
+
+    .btn-edit {
+        padding: 10px 30px;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 12px;
+        transition: all 0.3s ease;
+        background: linear-gradient(135deg, #d4a574, #c89968);
+        color: #4f4638;
+        flex: 1;
+    }
+
+    .btn-edit:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 10px rgba(212, 165, 116, 0.3);
+    }
+
+    .btn-delete {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 20px;
+        color: #c53e3e;
+        transition: all 0.3s ease;
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+    }
+
+    .btn-delete:hover {
+        background: rgba(197, 62, 62, 0.1);
+        transform: scale(1.1);
+    }
+
+    /* Add Bangunan Section */
+    .add-bangunan-section {
+        text-align: center;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .btn-tambah {
+        background: linear-gradient(135deg, #d4a574, #c89968);
+        color: #4f4638;
+        padding: 12px 50px;
+        border: none;
+        border-radius: 30px;
+        font-weight: 600;
+        font-size: 13px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-tambah:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(212, 165, 116, 0.3);
+    }
+
+    /* Modal Styles */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .modal-content {
+        background-color: white;
+        margin: 5% auto;
+        padding: 40px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        width: 90%;
+        max-width: 500px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        animation: slideDown 0.3s ease;
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+
+    @keyframes slideDown {
+        from {
+            transform: translateY(-50px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .modal-close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
+
+    .modal-close:hover {
+        color: #000;
+    }
+
+    .modal-content h2 {
+        color: #4f4638;
+        margin-bottom: 20px;
+        font-size: 22px;
+        clear: both;
+    }
+
+    .form-group {
+        margin-bottom: 28px;
+        margin-top: 5px;
+    }
+
+    .form-group label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        color: #4f4638;
+        margin-bottom: 12px;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="number"],
+    .form-group textarea {
+        width: 100%;
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+        font-family: inherit;
+    }
+
+    .form-group input[type="text"]:focus,
+    .form-group input[type="number"]:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: #d4a574;
+        box-shadow: 0 0 5px rgba(212, 165, 116, 0.3);
+    }
+
+    .file-input-wrapper {
+        margin-bottom: 10px;
+    }
+
+    .file-input {
+        display: none;
+    }
+
+    .file-input-label {
+        display: block;
+        padding: 15px;
+        background-color: #f5f5f5;
+        border: 1px dashed #ddd;
+        border-radius: 6px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 14px;
+        color: #666;
+    }
+
+    .file-input-label:hover {
+        background-color: #eeeeee;
+        border-color: #d4a574;
+    }
+
+    .image-preview-box {
+        position: relative;
+        margin-bottom: 15px;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+
+    .image-preview-box img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .btn-remove-img {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: #ff6b6b;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .btn-remove-img:hover {
+        background: #ff5252;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 30px;
+    }
+
+    .btn-submit,
+    .btn-cancel {
+        flex: 1;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-submit {
+        background: linear-gradient(135deg, #d4a574, #c89968);
+        color: #4f4638;
+    }
+
+    .btn-submit:hover {
+        transform: scale(1.02);
+        box-shadow: 0 4px 10px rgba(212, 165, 116, 0.3);
+    }
+
+    .btn-cancel {
+        background: #e8e8e8;
+        color: #666;
+    }
+
+    .btn-cancel:hover {
+        background: #ddd;
+    }
+
+    small {
+        display: block;
+        font-size: 12px;
+        color: #999;
+        margin-top: 5px;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+        .sejarah-bangunan-container {
+            padding: 30px 50px;
+        }
+
+        .bangunan-grid {
+            gap: 20px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .sejarah-bangunan-page-wrapper {
+            flex-direction: column;
+        }
+
+        .sidebar {
+            width: 100%;
+            height: auto;
+            position: relative;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .sidebar-menu {
+            display: none;
+            flex-direction: row;
+            padding: 10px 0;
+        }
+
+        .sejarah-bangunan-container {
+            margin-left: 0;
+            padding: 20px 15px;
+        }
+
+        .page-header h1 {
+            font-size: 24px;
+        }
+
+        .bangunan-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .modal-content {
+            width: 95%;
+            padding: 25px;
+        }
+    }

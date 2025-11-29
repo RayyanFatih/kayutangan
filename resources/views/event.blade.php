@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {{-- GANTI: {{ $event->title }} --}}
-    <title>Tari Malangan - Kayutangan Heritage</title>
+    <title>{{ $singleEvent->judul ?? 'Event' }} - Kayutangan Heritage</title>
     <link rel="stylesheet" href="{{ asset('css/acara&berita.css') }}">
 </head>
 <body>
@@ -27,16 +26,13 @@
             <!-- Main Content -->
             <div class="main-content">
                 <!-- Title -->
-                {{-- GANTI: {{ $event->title }} --}}
-                <h1 class="detail-title">Tari Malangan</h1>
+                <h1 class="detail-title">{{ $singleEvent->judul ?? 'Event' }}</h1>
                 
                 <!-- Meta Info -->
                 <div class="meta-info">
-                    {{-- GANTI: {{ $event->author }} --}}
-                    <span class="author">Penulis</span>
+                    <span class="author">{{ $singleEvent->lokasi ?? 'Lokasi' }}</span>
                     <span class="separator">—</span>
-                    {{-- GANTI: {{ $event->created_at->format('d F Y') }} --}}
-                    <span class="date">Tanggal post ini dibuat</span>
+                    <span class="date">{{ $singleEvent?->tanggal_mulai?->format('d F Y') ?? 'Tanggal tidak tersedia' }}</span>
                 </div>
 
                 <!-- Share Buttons -->
@@ -64,72 +60,56 @@
                 <!-- Featured Image -->
                 <div class="featured-image">
                     {{-- GANTI: {{ asset('storage/' . $event->image) }} --}}
-                    <img src="{{ asset('images/event-1.jpg') }}" alt="Tari Malangan">
-                </div>
-
+                <!-- Featured Image -->
+                <div class="featured-image">
+                    @if($singleEvent->gambar)
                 <!-- Content Body -->
                 <div class="content-body">
-                    {{-- GANTI: {!! $event->content !!} --}}
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
-
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
-
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
-
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
-
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
+                    <p><strong>Ringkasan:</strong></p>
+                    <p>{{ $singleEvent->ringkasan ?? 'Ringkasan tidak tersedia' }}</p>
+                    
+                    @if($singleEvent->konten)
+                    <p><strong>Deskripsi Lengkap:</strong></p>
+                    <p>{!! nl2br(e($singleEvent->konten)) !!}</p>
+                    @endif
+                    
+                    @if($singleEvent->tanggal_mulai || $singleEvent->tanggal_selesai)
+                    <p><strong>Jadwal Event:</strong></p>
+                    <p>
+                        Dari: {{ $singleEvent->tanggal_mulai?->format('d F Y H:i') ?? '-' }}<br>
+                        Hingga: {{ $singleEvent->tanggal_selesai?->format('d F Y H:i') ?? '-' }}
+                    </p>
+                    @endif
+                </div>>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
 
                     <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
                 </div>
 
                 <!-- Author Section -->
-                <div class="author-section">
-                    <h4>Nama Penulis</h4>
-                    {{-- GANTI: {{ $event->author }} atau data penulis dari database --}}
-                </div>
-            </div>
-
             <!-- Sidebar -->
             <aside class="sidebar">
-                <h3 class="sidebar-title">Berita Lainnya</h3>
+                <h3 class="sidebar-title">Event Lainnya</h3>
                 <div class="sidebar-list">
                     {{-- LOOP EVENT LAINNYA --}}
-                    {{-- @foreach($otherEvents as $item) --}}
-                    
-                    <!-- Sidebar Item 1 -->
+                    @forelse($otherEvents as $item)
                     <div class="sidebar-item">
                         <div class="sidebar-image">
-                            {{-- GANTI: {{ asset('storage/' . $item->image) }} --}}
-                            <img src="{{ asset('images/event-1.jpg') }}" alt="Event">
+                            @if($item->gambar)
+                                <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->judul }}">
+                            @else
+                                <img src="{{ asset('images/placeholder.png') }}" alt="{{ $item->judul }}">
+                            @endif
                         </div>
                         <div class="sidebar-content">
-                            {{-- GANTI: {{ $item->title }} --}}
-                            <h4>Judul Berita<br>Judul Berita</h4>
-                            {{-- GANTI: {{ $item->created_at->format('d F Y') }} --}}
-                            <p class="sidebar-date">Tanggal berita dibuat</p>
+                            <h4><a href="{{ route('event.detail', ['id' => $item->id]) }}" style="text-decoration: none; color: inherit;">{{ Str::limit($item->judul, 50) }}</a></h4>
+                            <p class="sidebar-date">{{ $item->tanggal_mulai->format('d F Y') }}</p>
                         </div>
                     </div>
-
-                    <!-- Sidebar Item 2 -->
-                    <div class="sidebar-item">
-                        <div class="sidebar-image">
-                            <img src="{{ asset('images/event-2.jpg') }}" alt="Event">
-                        </div>
-                        <div class="sidebar-content">
-                            <h4>Judul Berita<br>Judul Berita</h4>
-                            <p class="sidebar-date">Tanggal berita dibuat</p>
-                        </div>
-                    </div>
-
-                    <!-- Sidebar Item 3 -->
-                    <div class="sidebar-item">
-                        <div class="sidebar-image">
-                            <img src="{{ asset('images/event-3.jpg') }}" alt="Event">
-                        </div>
-                        <div class="sidebar-content">
-                            <h4>Judul Berita<br>Judul Berita</h4>
-                            <p class="sidebar-date">Tanggal berita dibuat</p>
+                    @empty
+                    <p style="text-align: center; color: #999;">Tidak ada event lainnya</p>
+                    @endforelse
+                </div>
+            </aside>        <p class="sidebar-date">Tanggal berita dibuat</p>
                         </div>
                     </div>
 

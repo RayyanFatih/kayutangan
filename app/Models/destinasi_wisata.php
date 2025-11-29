@@ -7,6 +7,8 @@ use Illuminate\Support\Str;
 
 class destinasi_wisata extends Model
 {
+    protected $table = 'destinasi_wisatas';
+    
     protected $fillable = [
         'nama',
         'slug',
@@ -22,19 +24,8 @@ class destinasi_wisata extends Model
     {
         static::creating(function ($model) {
             if (empty($model->slug)) {
-                $model->slug = Str::slug($model->name . '-' . Str::random(6));
+                $model->slug = Str::slug($model->nama . '-' . Str::random(6));
             }
         });
-
-        static::updating(function ($model) {
-            if ($model->isDirty('name')) {
-                $model->slug = Str::slug($model->name . '-' . Str::random(6));
-            }
-        });
-    }
-
-    public function mapLocation()
-    {
-        return $this->belongsTo(map_locations::class);
     }
 }

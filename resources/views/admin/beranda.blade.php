@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Kayutangan Heritage</title>
     <link rel="stylesheet" href="{{ asset('css-admin/beranda.css') }}">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body>
@@ -52,16 +54,10 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="menu-toggle" onclick="toggleSubmenu(event, 1)">
+                    <a href="{{ route('admin.destinasi.index') }}">
                         <span class="icon">🏖️</span>
                         <span>DESTINASI</span>
-                        <span class="toggle-icon">▼</span>
                     </a>
-                    <ul class="submenu">
-                        <li><a href="#tempat-nongkrong">TEMPAT NONGKRONG</a></li>
-                        <li><a href="#wisata">WISATA</a></li>
-                        <li><a href="#kuliner">KULINER</a></li>
-                    </ul>
                 </li>
                 <li>
                     <a href="#" class="menu-toggle" onclick="toggleSubmenu(event, 2)">
@@ -128,10 +124,11 @@
                             <div class="stat-card-number">125</div>
                             <div class="stat-card-subtext">Hari Ini - 20 November 2025</div>
                             <div class="date-selector">
-                                <input type="date" id="daily-date" value="2025-11-20" onchange="changeDailyDate(this.value)">
+                                <input type="date" id="daily-date" value="2025-11-20"
+                                    onchange="changeDailyDate(this.value)">
                             </div>
                         </div>
-                        
+
                         <div id="weekly-content" class="filter-content">
                             <div class="stat-card-number">856</div>
                             <div class="stat-card-subtext">Minggu Ini - 17-23 Nov 2025</div>
@@ -140,7 +137,7 @@
                                 <button class="week-btn" onclick="changeWeek(1)">Minggu Berikutnya ›</button>
                             </div>
                         </div>
-                        
+
                         <div id="monthly-content" class="filter-content">
                             <div class="stat-card-number">2350</div>
                             <div class="stat-card-subtext" id="visitor-month">November 2025</div>
@@ -261,7 +258,7 @@
             <!-- KELOLA EVENT & NEWS -->
             <div class="section">
                 <h2 class="section-title">Kelola Event & News</h2>
-                
+
                 <div style="margin-bottom: 25px;">
                     <h3 style="font-size: 14px; margin-bottom: 15px; font-weight: 600;">Gambar 1</h3>
                     <div class="form-group">
@@ -354,25 +351,70 @@
 
         // Data pengunjung mingguan (contoh)
         const weeklyVisitorData = {
-            'week-0': { count: 856, range: '17-23 Nov 2025' },
-            'week-1': { count: 945, range: '24-30 Nov 2025' },
-            'week--1': { count: 723, range: '10-16 Nov 2025' }
+            'week-0': {
+                count: 856,
+                range: '17-23 Nov 2025'
+            },
+            'week-1': {
+                count: 945,
+                range: '24-30 Nov 2025'
+            },
+            'week--1': {
+                count: 723,
+                range: '10-16 Nov 2025'
+            }
         };
 
         // Data pengunjung per bulan
         const visitorDataByMonth = {
-            '01': { count: 1850, month: 'Januari' },
-            '02': { count: 2100, month: 'Februari' },
-            '03': { count: 1950, month: 'Maret' },
-            '04': { count: 2350, month: 'April' },
-            '05': { count: 2150, month: 'Mei' },
-            '06': { count: 2400, month: 'Juni' },
-            '07': { count: 2800, month: 'Juli' },
-            '08': { count: 2650, month: 'Agustus' },
-            '09': { count: 2200, month: 'September' },
-            '10': { count: 2500, month: 'Oktober' },
-            '11': { count: 2350, month: 'November' },
-            '12': { count: 2750, month: 'Desember' }
+            '01': {
+                count: 1850,
+                month: 'Januari'
+            },
+            '02': {
+                count: 2100,
+                month: 'Februari'
+            },
+            '03': {
+                count: 1950,
+                month: 'Maret'
+            },
+            '04': {
+                count: 2350,
+                month: 'April'
+            },
+            '05': {
+                count: 2150,
+                month: 'Mei'
+            },
+            '06': {
+                count: 2400,
+                month: 'Juni'
+            },
+            '07': {
+                count: 2800,
+                month: 'Juli'
+            },
+            '08': {
+                count: 2650,
+                month: 'Agustus'
+            },
+            '09': {
+                count: 2200,
+                month: 'September'
+            },
+            '10': {
+                count: 2500,
+                month: 'Oktober'
+            },
+            '11': {
+                count: 2350,
+                month: 'November'
+            },
+            '12': {
+                count: 2750,
+                month: 'Desember'
+            }
         };
 
         let currentWeekOffset = 0;
@@ -405,9 +447,14 @@
         function changeDailyDate(dateValue) {
             const count = dailyVisitorData[dateValue] || Math.floor(Math.random() * 100) + 100;
             const dateObj = new Date(dateValue);
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            };
             const dateStr = dateObj.toLocaleDateString('id-ID', options);
-            
+
             animateNumberChange(count, 'Hari ini - ' + dateStr);
         }
 
@@ -426,7 +473,7 @@
         // Change month
         function changeMonth(monthValue) {
             const data = visitorDataByMonth[monthValue];
-            
+
             animateNumberChange(data.count, data.month + ' 2025');
         }
 
@@ -478,4 +525,5 @@
         });
     </script>
 </body>
+
 </html>

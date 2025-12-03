@@ -50,3 +50,8 @@ Route::prefix('admin')->group(function () {
     Route::put('/pengurus/{id}', [\App\Http\Controllers\Admin\PengurusController::class, 'update'])->name('admin.pengurus.update');
     Route::delete('/pengurus/{id}', [\App\Http\Controllers\Admin\PengurusController::class, 'destroy'])->name('admin.pengurus.destroy');
 });
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('destinasi', \App\Http\Controllers\Admin\DestinasiController::class);
+    Route::resource('sejarah-bangunan', \App\Http\Controllers\Admin\SejarahBangunanController::class);
+});

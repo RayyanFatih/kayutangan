@@ -12,11 +12,11 @@
         <ul>
             <li><a href="{{ url('/') }}">BERANDA</a></li>
             <li><a href="{{ url('/profil') }}">PROFIL</a></li>
-            <li><a href="{{ url('/') }}#sejarah">SEJARAH</a></li>
-            <li><a href="{{ url('/event-news') }}" class="active">EVENT & NEWS</a></li>
-            <li><a href="{{ url('/') }}#maps">MAPS</a></li>
-            <li><a href="{{ url('/') }}#destinasi">DESTINASI</a></li>
-            <li><a href="{{ url('/') }}#galeri">GALERI</a></li>
+            <li><a href="{{ url('/sejarah') }}">SEJARAH</a></li>
+            <li><a href="{{ url('/event&news') }}" class="active">EVENT & NEWS</a></li>
+            <li><a href="{{ url('/maps') }}">MAPS</a></li>
+            <li><a href="{{ url('/destinasi') }}">DESTINASI</a></li>
+            <li><a href="{{ url('/galeri') }}">GALERI</a></li>
         </ul>
     </nav>
 

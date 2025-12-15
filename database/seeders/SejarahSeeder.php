@@ -28,12 +28,12 @@ Bangunan-bangunan bergaya art deco dan kolonial klasik dibangun di sepanjang jal
 Kawasan ini tetap menjadi pusat bisnis, tapi juga menjadi tempat pertemuan berbagai lapisan masyarakat—mulai dari para pegawai pemerintah, pedagang, seniman, hingga pelajar. Interaksi inilah yang membentuk dinamika unik dan menjadikan kawasan ini sebagai cerminan kehidupan urban kota Malang.',
             
             'revitalisasi_title' => 'Revitalisasi dan Penetapan sebagai Kawasan Heritage',
-            'revitalisasi_text' => 'Memasuki abad ke-21, Kayutangan mulai menjadi perhatian pemerintah lokal sebagai kawasan bersejarah yang harus dilestarikan. Pada tahun-tahun terakhir, diluncurkan program revitalisasi besar-besaran untuk menghidupkan kembali Kayutangan sebagai kawasan heritage. Langkah ini dilakukan tidak hanya untuk menjaga arsitektur bersepuh, tetapi juga untuk mengenalkan nilai sejarah dan budaya kepada generasi muda.
+            'revitalisasi_text' => 'Memasuki abad ke-21, Pemerintah Kota Malang mulai menyadari pentingnya melestarikan wajah kota. Pada tahun-tahun terakhir, dirancangkan program revitalisasi besar-besaran untuk menghidupkan kembali Kayutangan sebagai heritage. Langkah ini dilakukan tidak hanya untuk menggali arsitektur bersejarah, tetapi juga mengembangkan fungsi kawasan sebagai ruang publik yang hidup dan menarik.
 
-Dalam proses revitalisasi, elemen-elemen historis kawasan tetap dijaga. Fasad bangunan direstorasi, jalanan ditata ulang untuk pejalan kaki, dan narasi sejarah dihidupkan kembali melalui instalasi mural, interaktif booth, serta papan wisata yang bercerita. Penetapan Kayutangan sebagai Kawasan Cagar Budaya pun menjadi langkah penting dalam upaya pelestarian kota tama.',
+Dalam proses revitalisasi, elemen-elemen historis kawasan tetap diaga. Upaya lansudng disesuaikan, landmark diistirahatkan, jalanan diaspal dengan estetika yang dipertahankan, dan nuansa seni dan budaya diperkuat. Penetapan Kayutangan sebagai Kawasan Cagar Budaya pun menjadi tanggung jawab penting dalam upaya pelestarian kota karma.',
             
             'menjaga_jejak_title' => 'Menjaga Jejak, Membangun Masa Depan',
-            'menjaga_jejak_text' => 'Sejarah Kayutangan adalah bagian penting dari cerita besar Kota Malang. Ia mengingatkan kita tentang perjalanan kota, identitas masyarakatnya, dan warisan sebagai fondasi untuk masa depan. Kini, setiap langkah di Kayutangan bukan hanya sebuah perjalanan wisata, tetapi juga langkah dalam menyusuri jejak sejarah yang hidup dan terus berkembang.',
+            'menjaga_jejak_text' => 'Sejarah Kayutangan adalah bagian penting dari cerita besar Kota Malang. Di tengah perkembangan kita tertoteng perjalanan kota, identitas masyarakat, dan pentingnya merawat warisan sejarah untuk masa depan. Kini, setiap langkah di Kayutangan bukan hanya sebuah perjalanan wisata, tetapi juga langkah dalam menyusuri jejak sejarah yang hidup dan terus berkembang.',
         ]);
     }
 }

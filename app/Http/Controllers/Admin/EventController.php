@@ -6,6 +6,7 @@ use App\Models\Event;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class EventController extends Controller
 {
@@ -26,12 +27,15 @@ class EventController extends Controller
         $validated = $request->validate([
             'judul' => 'required|string|max:255',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
-            'tanggal_mulai' => 'nullable|date',
+            'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'nullable|date',
-            'lokasi' => 'nullable|string|max:255',
+            'lokasi' => 'required|string|max:255',
             'ringkasan' => 'nullable|string',
             'konten' => 'nullable|string',
         ]);
+
+        // Auto-generate slug dari judul
+        $validated['slug'] = Str::slug($validated['judul']);
 
         if ($request->hasFile('gambar')) {
             $path = $request->file('gambar')->store('events', 'public');
@@ -59,12 +63,15 @@ class EventController extends Controller
         $validated = $request->validate([
             'judul' => 'required|string|max:255',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
-            'tanggal_mulai' => 'nullable|date',
+            'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'nullable|date',
-            'lokasi' => 'nullable|string|max:255',
+            'lokasi' => 'required|string|max:255',
             'ringkasan' => 'nullable|string',
             'konten' => 'nullable|string',
         ]);
+
+        // Update slug jika judul berubah
+        $validated['slug'] = Str::slug($validated['judul']);
 
         if ($request->hasFile('gambar')) {
             if ($event->gambar && Storage::disk('public')->exists($event->gambar)) {

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-       Schema::create('destinasi_wisatas', function (Blueprint $table) {
+       Schema::create('destinasi_wisata', function (Blueprint $table) {
     $table->id();
     $table->string('nama');                     // Nama destinasi wisata
     $table->string('slug')->unique();           // Slug untuk halaman detail
@@ -42,6 +42,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('destinasi_wisatas');
+        Schema::dropIfExists('destinasi_wisata');
     }
 };

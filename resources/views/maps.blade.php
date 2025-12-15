@@ -5,10 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maps - Kayutangan Heritage</title>
     <link rel="stylesheet" href="{{ asset('css/maps.css') }}">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -51,23 +47,12 @@
                 </div>
             </div>
 
-            <button class="btn-show-route" onclick="showRoute()">Tampilkan Rute</button>
-            <button class="btn-clear-route" onclick="clearRoute()">Hapus Rute</button>
+            <button class="btn-show-route" onclick="openGoogleMaps()">Cari</button>
         </div>
 
         <!-- Maps Container -->
-        <div id="map" class="map-container"></div>
-
-        <!-- Place Info -->
-        <div id="place-info" class="place-info" style="display: none;">
-            <div class="info-content">
-                <h3 id="info-name"></h3>
-                <p id="info-category"></p>
-                <p id="info-description"></p>
-                <div class="info-coords">
-                    <small id="info-coords"></small>
-                </div>
-            </div>
+        <div id="map" class="map-container">
+            <iframe src="https://maps.google.com/maps?q=Kayutangan,+Malang,+Indonesia&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
     </section>
 
@@ -200,111 +185,29 @@
             }
         ];
 
-        // Koordinat Kayutangan (titik awal)
-        const kayutanganCenter = [-7.9766, 112.6302];
-        let map;
-        let userMarker;
-        let destinationMarker;
-        let routingControl;
         let currentPlaces = [...places];
+        let selectedPlace = null;
 
-        // Inisialisasi peta
+        // Inisialisasi saat halaman dimuat
         document.addEventListener('DOMContentLoaded', function() {
-            // Inisialisasi Leaflet Map
-            map = L.map('map').setView(kayutanganCenter, 15);
-            
-            // Tambah tile layer
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors',
-                maxZoom: 19
-            }).addTo(map);
-
-            // Tambah marker untuk posisi awal Kayutangan
-            userMarker = L.circleMarker(kayutanganCenter, {
-                radius: 8,
-                fillColor: '#8B7355',
-                color: '#6b5344',
-                weight: 2,
-                opacity: 1,
-                fillOpacity: 0.8
-            }).addTo(map);
-            userMarker.bindPopup('Kayutangan Heritage');
-
-            // Tambah marker untuk semua tempat
-            addPlaceMarkers(currentPlaces);
-
-            // Set default places di dropdown
             updatePlaceSelect();
         });
 
-        // Tambah marker untuk tempat
-        function addPlaceMarkers(placesToShow) {
-            placesToShow.forEach(place => {
-                let icon = getMarkerIcon(place.category);
-                let marker = L.marker([place.lat, place.lng], { icon: icon })
-                    .addTo(map)
-                    .bindPopup(`<strong>${place.name}</strong><br>${place.description}`)
-                    .addEventListener('click', function() {
-                        document.getElementById('place-select').value = place.id;
-                        showPlaceInfo(place);
-                    });
-            });
-        }
-
-        // Dapatkan icon berdasarkan kategori
-        function getMarkerIcon(category) {
-            let color;
-            let emoji;
-            
-            switch(category) {
-                case 'kuliner':
-                    color = 'FF6B6B';
-                    emoji = '🍽️';
-                    break;
-                case 'tempat-nongkrong':
-                    color = 'FFD93D';
-                    emoji = '☕';
-                    break;
-                case 'tempat-wisata':
-                    color = '6BCB77';
-                    emoji = '🏛️';
-                    break;
-                default:
-                    color = '4D96FF';
-                    emoji = '📍';
-            }
-
-            return L.divIcon({
-                html: `<div style="font-size: 24px; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">${emoji}</div>`,
-                iconSize: [32, 32],
-                className: 'custom-marker'
-            });
-        }
-
-        // Update tempat berdasarkan kategori
+        // Update dropdown tempat berdasarkan kategori
         function updatePlaces() {
             const selectedCategory = document.getElementById('category-select').value;
             
-            // Clear current markers
-            map.eachLayer(layer => {
-                if (layer instanceof L.Marker && layer !== userMarker) {
-                    map.removeLayer(layer);
-                }
-            });
-
-            // Filter tempat
             if (selectedCategory === '') {
                 currentPlaces = [...places];
             } else {
                 currentPlaces = places.filter(place => place.category === selectedCategory);
             }
 
-            // Tambah marker baru
-            addPlaceMarkers(currentPlaces);
             updatePlaceSelect();
+            selectedPlace = null;
         }
 
-        // Update dropdown pilih tempat
+        // Update daftar tempat di dropdown
         function updatePlaceSelect() {
             const selectElement = document.getElementById('place-select');
             selectElement.innerHTML = '<option value="">-- Pilih Tempat --</option>';
@@ -321,103 +224,22 @@
         function selectPlace() {
             const selectedId = document.getElementById('place-select').value;
             if (selectedId) {
-                const place = places.find(p => p.id == selectedId);
-                if (place) {
-                    showPlaceInfo(place);
-                    map.setView([place.lat, place.lng], 16);
-                }
+                selectedPlace = places.find(p => p.id == selectedId);
+            } else {
+                selectedPlace = null;
             }
         }
 
-        // Tampilkan informasi tempat
-        function showPlaceInfo(place) {
-            document.getElementById('info-name').textContent = place.name;
-            document.getElementById('info-category').textContent = `Kategori: ${getCategoryLabel(place.category)}`;
-            document.getElementById('info-description').textContent = place.description;
-            document.getElementById('info-coords').textContent = `Koordinat: ${place.lat.toFixed(4)}, ${place.lng.toFixed(4)}`;
-            document.getElementById('place-info').style.display = 'block';
-
-            // Scroll ke info
-            document.getElementById('place-info').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Dapatkan label kategori
-        function getCategoryLabel(category) {
-            const labels = {
-                'kuliner': 'Kuliner',
-                'tempat-nongkrong': 'Tempat Nongkrong',
-                'tempat-wisata': 'Tempat Wisata'
-            };
-            return labels[category] || category;
-        }
-
-        // Tampilkan rute
-        function showRoute() {
-            const selectedId = document.getElementById('place-select').value;
-            
-            if (!selectedId) {
-                alert('Silakan pilih tempat tujuan terlebih dahulu');
+        // Buka Google Maps dengan tempat yang dipilih
+        function openGoogleMaps() {
+            if (!selectedPlace) {
+                alert('Silakan pilih tempat terlebih dahulu!');
                 return;
             }
 
-            const destination = places.find(p => p.id == selectedId);
-            
-            if (destinationMarker) {
-                map.removeLayer(destinationMarker);
-            }
-
-            // Tambah marker destinasi
-            destinationMarker = L.marker([destination.lat, destination.lng], {
-                icon: L.icon({
-                    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-                    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-                    iconSize: [25, 41],
-                    iconAnchor: [12, 41],
-                    popupAnchor: [1, -34],
-                    shadowSize: [41, 41]
-                })
-            }).addTo(map);
-
-            // Hapus routing control yang lama
-            if (routingControl) {
-                map.removeControl(routingControl);
-            }
-
-            // Tambah routing control
-            routingControl = L.Routing.control({
-                waypoints: [
-                    L.latLng(kayutanganCenter[0], kayutanganCenter[1]),
-                    L.latLng(destination.lat, destination.lng)
-                ],
-                routeWhileDragging: false,
-                createMarker: function() { return null; },
-                lineOptions: {
-                    styles: [{color: '#8B7355', opacity: 0.7, weight: 5}]
-                }
-            }).addTo(map);
-
-            // Fit bounds
-            map.fitBounds([
-                [kayutanganCenter[0], kayutanganCenter[1]],
-                [destination.lat, destination.lng]
-            ], { padding: [50, 50] });
-        }
-
-        // Hapus rute
-        function clearRoute() {
-            if (routingControl) {
-                map.removeControl(routingControl);
-                routingControl = null;
-            }
-
-            if (destinationMarker) {
-                map.removeLayer(destinationMarker);
-                destinationMarker = null;
-            }
-
-            document.getElementById('place-select').value = '';
-            document.getElementById('place-info').style.display = 'none';
-            map.setView(kayutanganCenter, 15);
+            // Buka Google Maps dengan koordinat dan nama tempat
+            const googleMapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(selectedPlace.name)}/@${selectedPlace.lat},${selectedPlace.lng},17z`;
+            window.open(googleMapsUrl, '_blank');
         }
     </script>
 </body>

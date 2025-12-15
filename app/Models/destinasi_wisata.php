@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class destinasi_wisata extends Model
 {
-    protected $table = 'destinasi_wisatas';
+    protected $table = 'destinasi_wisata';
     
     protected $fillable = [
         'nama',

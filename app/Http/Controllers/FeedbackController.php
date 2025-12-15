@@ -43,16 +43,13 @@ class FeedbackController extends Controller
             // Simpan ke database
             Feedback::create($validated);
 
-            // Return response sukses
-            return response()->json([
-                'success' => true,
-                'message' => 'Terima kasih! Feedback Anda telah dikirim dengan sukses.'
-            ]);
+            // Return redirect dengan flash message
+            return redirect()->route('feedback.index')
+                ->with('success', 'Terima kasih! Feedback Anda telah dikirim dengan sukses.');
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Terjadi kesalahan saat mengirim feedback.'
-            ], 500);
+            return redirect()->back()
+                ->withErrors('Terjadi kesalahan saat mengirim feedback.')
+                ->withInput();
         }
     }
 }

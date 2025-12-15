@@ -45,7 +45,7 @@
 
         <!-- Feedback Form Container -->
         <div class="feedback-container">
-            <form action="{{ route('feedback.store') }}" method="POST" class="feedback-form">
+            <form id="feedback-form" action="{{ route('feedback.store') }}" method="POST" class="feedback-form">
                 @csrf
 
                 <!-- Left Column -->
@@ -113,7 +113,7 @@
             </form>
 
             <!-- Submit Button -->
-            <button type="submit" form="feedback-form" class="btn-kirim" onclick="document.querySelector('form').submit()">KIRIM</button>
+            <button type="submit" form="feedback-form" class="btn-kirim">KIRIM</button>
         </div>
     </section>
 

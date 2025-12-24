@@ -54,7 +54,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('admin.destinasi.index') }}">
+                    <a href="{{ route('admin.edit-destinasi') }}">
                         <span class="icon">🏖️</span>
                         <span>DESTINASI</span>
                     </a>
@@ -77,7 +77,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#feedback">
+                    <a href="{{ route('admin.feedback.index') }}">
                         <span class="icon">💬</span>
                         <span>FEEDBACK</span>
                     </a>

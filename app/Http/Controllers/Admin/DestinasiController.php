@@ -16,10 +16,16 @@ class DestinasiController extends Controller
         return view('admin.destinasi.index', compact('destinasi'));
     }
 
+    public function editView()
+    {
+        $destinasi = destinasi_wisata::all();
+        return view('admin.edit-destinasi', compact('destinasi'));
+    }
+
     public function create()
     {
-        $mapLocations = map_locations::all();
-        return view('admin.destinasi.create', compact('mapLocations'));
+        $kategori = ['tempat nongkrong', 'tempat wisata', 'kuliner'];
+        return view('admin.destinasi.create', compact('kategori'));
     }
 
     public function store(Request $request)
@@ -27,11 +33,10 @@ class DestinasiController extends Controller
         $validated = $request->validate([
             'nama' => 'required|string|max:255',
             'deskripsi' => 'required|string',
-            'kategori' => 'required|in:nongkrong,kuliner,wisata',
+            'kategori' => 'required|in:tempat nongkrong,tempat wisata,kuliner',
             'alamat' => 'required|string|max:255',
             'jam_buka_tutup' => 'nullable|string',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'map_location_id' => 'nullable|integer|exists:map_locations,id',
+            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
         ]);
 
         // Handle upload gambar
@@ -53,8 +58,8 @@ class DestinasiController extends Controller
 
     public function edit(destinasi_wisata $destinasi)
     {
-        $mapLocations = map_locations::all();
-        return view('admin.destinasi.edit', compact('destinasi', 'mapLocations'));
+        $kategori = ['tempat nongkrong', 'tempat wisata', 'kuliner'];
+        return view('admin.destinasi.edit', compact('destinasi', 'kategori'));
     }
 
     public function update(Request $request, destinasi_wisata $destinasi)
@@ -62,11 +67,10 @@ class DestinasiController extends Controller
         $validated = $request->validate([
             'nama' => 'required|string|max:255',
             'deskripsi' => 'required|string',
-            'kategori' => 'required|in:nongkrong,kuliner,wisata',
+            'kategori' => 'required|in:tempat nongkrong,tempat wisata,kuliner',
             'alamat' => 'required|string|max:255',
             'jam_buka_tutup' => 'nullable|string',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'map_location_id' => 'nullable|integer|exists:map_locations,id',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
         ]);
 
         // Handle new uploaded gambar
@@ -100,6 +104,113 @@ public function destroy(destinasi_wisata $destinasi)
     } catch (\Exception $e) {
         return redirect()->route('admin.destinasi.index')
             ->with('error', '❌ Gagal menghapus destinasi: ' . $e->getMessage());
+    }
+}
+
+// API Methods for AJAX requests
+public function getDestinasi($id)
+{
+    try {
+        $destinasi = destinasi_wisata::findOrFail($id);
+        return response()->json([
+            'id' => $destinasi->id,
+            'nama' => $destinasi->nama,
+            'deskripsi' => $destinasi->deskripsi,
+            'kategori' => $destinasi->kategori,
+            'alamat' => $destinasi->alamat,
+            'jam_buka_tutup' => $destinasi->jam_buka_tutup,
+            'gambar' => $destinasi->gambar,
+        ]);
+    } catch (\Exception $e) {
+        return response()->json(['error' => 'Destinasi tidak ditemukan'], 404);
+    }
+}
+
+public function apiStore(Request $request)
+{
+    $validated = $request->validate([
+        'nama' => 'required|string|max:255',
+        'deskripsi' => 'required|string',
+        'kategori' => 'required|in:tempat nongkrong,tempat wisata,kuliner',
+        'alamat' => 'required|string|max:255',
+        'jam_buka_tutup' => 'nullable|string',
+        'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
+    ]);
+
+    try {
+        if ($request->hasFile('gambar')) {
+            $validated['gambar'] = $request->file('gambar')->store('destinasi', 'public');
+        }
+
+        destinasi_wisata::create($validated);
+
+        return response()->json([
+            'success' => true,
+            'message' => '✅ Destinasi berhasil ditambahkan!'
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Error: ' . $e->getMessage()
+        ], 500);
+    }
+}
+
+public function apiUpdate(Request $request, $id)
+{
+    $validated = $request->validate([
+        'nama' => 'required|string|max:255',
+        'deskripsi' => 'required|string',
+        'kategori' => 'required|in:tempat nongkrong,tempat wisata,kuliner',
+        'alamat' => 'required|string|max:255',
+        'jam_buka_tutup' => 'nullable|string',
+        'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+    ]);
+
+    try {
+        $destinasi = destinasi_wisata::findOrFail($id);
+
+        if ($request->hasFile('gambar')) {
+            if ($destinasi->gambar && Storage::disk('public')->exists($destinasi->gambar)) {
+                Storage::disk('public')->delete($destinasi->gambar);
+            }
+            $validated['gambar'] = $request->file('gambar')->store('destinasi', 'public');
+        }
+
+        $destinasi->update($validated);
+
+        return response()->json([
+            'success' => true,
+            'message' => '✅ Destinasi berhasil diperbarui!'
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Error: ' . $e->getMessage()
+        ], 500);
+    }
+}
+
+public function apiDestroy($id)
+{
+    try {
+        $destinasi = destinasi_wisata::findOrFail($id);
+
+        if ($destinasi->gambar && Storage::disk('public')->exists($destinasi->gambar)) {
+            Storage::disk('public')->delete($destinasi->gambar);
+        }
+
+        $destinasi->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => '✅ Destinasi berhasil dihapus!'
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Error: ' . $e->getMessage()
+        ], 500);
     }
 }
 }

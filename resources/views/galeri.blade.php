@@ -14,8 +14,8 @@
             <li><a href="{{ url('/') }}">BERANDA</a></li>
             <li><a href="{{ url('/profil') }}">PROFIL</a></li>
             <li><a href="{{ url('/sejarah') }}">SEJARAH</a></li>
-            <li><a href="{{ url('/event-news') }}">EVENT & NEWS</a></li>
-            <li><a href="{{ url('/') }}#maps">MAPS</a></li>
+            <li><a href="{{ url('/event&news') }}">EVENT & NEWS</a></li>
+            <li><a href="{{ url('/maps') }}" >MAPS</a></li>
             <li><a href="{{ url('/destinasi') }}">DESTINASI</a></li>
             <li><a href="{{ url('/galeri') }}" class="active">GALERI</a></li>
         </ul>

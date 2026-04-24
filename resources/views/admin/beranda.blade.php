@@ -85,9 +85,14 @@
             </ul>
 
             <div class="sidebar-bottom">
-                <a href="#settings">👤 Manajemen Admin</a>
-                <a href="#settings">⚙️ Pengaturan Website</a>
-                <a href="#logout">🚪 Logout</a>
+                <a href="{{ route('admin.settings.edit') }}">⚙️ Pengaturan Website</a>
+                <div style="font-size:11px; color:rgba(255,255,255,0.5); margin: 8px 0 4px; padding-left:4px;">
+                    👤 {{ Auth::user()->name ?? 'Admin' }}
+                </div>
+                <form method="POST" action="{{ route('admin.logout') }}" style="margin:0;">
+                    @csrf
+                    <button type="submit" style="background:none; border:none; color:inherit; cursor:pointer; font-size:13px; padding:8px 12px; width:100%; text-align:left; border-radius:6px; transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='none'">🚪 Logout</button>
+                </form>
             </div>
         </aside>
 

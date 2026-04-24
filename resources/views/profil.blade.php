@@ -155,9 +155,10 @@
                 <ul>
                     <li><a href="{{ url('/') }}">Beranda</a></li>
                     <li><a href="{{ url('/profil') }}">Profil</a></li>
-                    <li><a href="{{ url('/') }}#destinasi">Destinasi Wisata</a></li>
-                    <li><a href="{{ url('/') }}#galeri">Galeri</a></li>
-                    <li><a href="#feedback">Feedback</a></li>
+                    <li><a href="{{ url('/destinasi') }}">Destinasi Wisata</a></li>
+                    <li><a href="{{ url('/galeri') }}">Galeri</a></li>
+                    <li><a href="{{ url('/feedback') }}">Feedback</a></li>
+                    <li><a href="{{ url('/admin/dashboard') }}">Dashboard</a></li>
                 </ul>
             </div>
 
